@@ -1,1 +1,1 @@
-operatuns systema
+operatuns systema (nucleus)
