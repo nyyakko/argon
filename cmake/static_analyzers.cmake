@@ -3,7 +3,7 @@ include(static_analyzers/cppcheck)
 
 function(enable_static_analyzers target ENABLED)
 
-    set(CMAKE_CXX_VERSION 23)
+    set(CMAKE_CXX_STANDARD 23)
 
     find_program(CPPCHECK cppcheck)
     find_program(CLANGTIDY clang-tidy)
@@ -23,5 +23,7 @@ function(enable_static_analyzers target ENABLED)
     else()
         message(STATUS "[${PROJECT_NAME}] Static analyzers disabled")
     endif()
+
+    set(teste ${teste} "cppcheck")
 
 endfunction()
