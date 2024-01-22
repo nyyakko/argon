@@ -4,8 +4,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "VGAColor.hpp"
 #include "libcpp/conversion/BitCast.hpp"
+
+#include "VGAColor.hpp"
 
 class [[gnu::packed]] VGAEntry
 {

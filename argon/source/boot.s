@@ -4,6 +4,8 @@
 .set MAGIC,    0x1BADB002
 .set CHECKSUM, -(MAGIC + FLAGS)
 
+.section .note.GNU-stack
+
 .section .multiboot
 .align 4
 .long MAGIC
@@ -29,3 +31,4 @@ _start:
     jmp 1b
 
 .size _start, . - _start
+

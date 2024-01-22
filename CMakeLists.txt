@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(argon LANGUAGES CXX)
+project(argon LANGUAGES CXX ASM)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
@@ -10,13 +10,14 @@ include(static_analyzers)
 include(toolchain_vcpkg)
 include(remote_clone)
 
-enable_vcpkg()
+# enable_vcpkg()
 
 # set(argon_LinkerOptions ${argon_LinkerOptions}
 # )
 
 set(argon_CompilerOptions ${argon_CompilerOptions}
-    --target=i386-pc-unknown-elf
+    --target=i686-pc-unknown-elf
+    -march=i686
     -ffreestanding
     -fno-exceptions
     -fno-threadsafe-statics

@@ -16,10 +16,7 @@ namespace io {
 inline auto inb(uint16_t const port) noexcept
 {
     uint8_t result = 0;
-    asm volatile ("inb %1, %0"
-                    : "=a"(result)
-                    : "Nd"(port)
-                    : "memory");
+    asm volatile ("inb %1, %0" : "=a"(result) : "Nd"(port) : "memory");
     return result;
 }
 

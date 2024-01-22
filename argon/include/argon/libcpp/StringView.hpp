@@ -12,7 +12,7 @@ public:
     {
     }
 
-    constexpr auto* data(this auto& self) noexcept { return self.data_m; }
+    constexpr auto const* data(this auto& self) noexcept { return self.data_m; }
     constexpr auto size(this auto& self) noexcept { return self.size_m; }
 
     constexpr auto operator==(StringView toCompare) noexcept
@@ -25,7 +25,7 @@ private:
     size_t size_m = 0;
 };
 
-constexpr StringView operator""_sv(char const* data, size_t)
+constexpr StringView operator""_sv(char const* data, size_t) noexcept
 {
     return StringView(data);
 }
