@@ -11,18 +11,22 @@
 class [[gnu::packed]] VGAEntry
 {
 public:
-    constexpr VGAEntry(char const byte, VGAColor const foreground = VGAColor::LIGHT_GREY, VGAColor const background = VGAColor::BLACK):
+    explicit constexpr VGAEntry(char const byte, VGAColor const foreground = VGAColor::LIGHT_GREY, VGAColor const background = VGAColor::BLACK):
         byte_m(byte), foreground_m(foreground), backgroun_m(background)
     {
     }
 
+    // cppcheck-suppress functionConst
     explicit constexpr operator uint16_t(this auto self)
     {
         return bit_cast<uint16_t>(self);
     }
 
+    // cppcheck-suppress functionStatic
     auto constexpr byte(this auto self) { return self.byte_m; }
+    // cppcheck-suppress functionStatic
     auto constexpr foreground(this auto self) { return self.foreground_m; }
+    // cppcheck-suppress functionStatic
     auto constexpr background(this auto self) { return self.backgroun_m; }
 
 private:
