@@ -1,6 +1,6 @@
-#include "VGA.hpp"
+#include "hardware/VGA.hpp"
 
-#include "PortIO.hpp"
+#include "hardware/io/PortIO.hpp"
 
 VGA::VGA() noexcept
 {

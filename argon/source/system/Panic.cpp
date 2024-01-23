@@ -1,17 +1,17 @@
-#pragma once
+#include "system/Panic.hpp"
 
-#include "libcpp/StringView.hpp"
 #include "libc/random.hpp"
 
-#include "VGA.hpp"
+#include "hardware/VGA.hpp"
+#include "hardware/io/PortIO.hpp"
 #include "Terminal.hpp"
-#include "PortIO.hpp"
 
-inline void panic(StringView const message)
+void panic(StringView const message)
 {
     asm ("cli");
 
-    static constexpr StringView messages[] = {
+    static constexpr StringView messages[] =
+    {
         "I did that?"_sv,
         "Note to self: Never touch the red button again."_sv,
         "Did I just press the self-destruct button?"_sv,

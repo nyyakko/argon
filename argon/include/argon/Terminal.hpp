@@ -2,8 +2,8 @@
 
 #include "libcpp/StringView.hpp"
 
-#include "VGA.hpp"
-#include "VGAColor.hpp"
+#include "hardware/VGA.hpp"
+#include "hardware/VGAColor.hpp"
 
 class Terminal
 {

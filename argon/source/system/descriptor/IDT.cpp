@@ -1,6 +1,6 @@
-#include "IDT.hpp"
+#include "system/descriptor/IDT.hpp"
 
-#include "Exception.hpp"
+#include "system/Exception.hpp"
 
 IDT::IDT() noexcept:
     table_m ({
@@ -23,7 +23,7 @@ IDT::IDT() noexcept:
     set_entry(12, interrupt_12, 0x8E);
     set_entry(13, interrupt_13, 0x8E);
     set_entry(14, interrupt_14, 0x8E);
-    set_entry(15, interrupt_15, 0x8E);
+    set_entry(15, interrupt_generic, 0x8E);
     set_entry(16, interrupt_16, 0x8E);
     set_entry(17, interrupt_17, 0x8E);
     set_entry(18, interrupt_18, 0x8E);

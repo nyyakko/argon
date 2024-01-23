@@ -1,4 +1,4 @@
-#include "GDT.hpp"
+#include "system/descriptor/GDT.hpp"
 
 GDT::GDT() noexcept:
     table_m ({
