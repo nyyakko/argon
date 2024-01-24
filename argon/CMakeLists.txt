@@ -4,7 +4,7 @@ add_library(kernel STATIC "${argon_SourceFiles}")
 
 set(CMAKE_ASM_FLAGS "-x assembler-with-cpp")
 
-enable_static_analyzers(kernel OFF)
+enable_static_analyzers(kernel ON)
 
 target_include_directories(kernel
     PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"

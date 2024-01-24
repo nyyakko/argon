@@ -9,29 +9,29 @@ extern "C" void handle_generic_interrupt()
 
 extern "C" void handle_panicking_interrupt(Registers const* registers)
 {
-    constexpr static StringView messages[] =
+    static constexpr StringView messages[] =
     {
-        "divide by zero"_sv,
-        "debug error"_sv,
-        "nmi interrupt"_sv,
-        "breakpoint"_sv,
-        "overflow"_sv,
-        "bound range exceeded"_sv,
-        "invalid opcode exception"_sv,
-        "device not available exception"_sv,
-        "coprocessor segment overrun"_sv,
-        "invalid tss exception"_sv,
-        "segment not present"_sv,
-        "stack fault exception"_sv,
-        "general protection exception"_sv,
-        "page fault exception"_sv,
-        "fpu float-point error"_sv,
+        "DIVIDE BY ZERO"_sv,
+        "DEBUG ERROR"_sv,
+        "NMI INTERRUPT"_sv,
+        "BREAKPOINT"_sv,
+        "OVERFLOW"_sv,
+        "BOUND RANGE EXCEEDED"_sv,
+        "INVALID OPCODE EXCEPTION"_sv,
+        "DEVICE NOT AVAILABLE EXCEPTION"_sv,
+        "COPROCESSOR SEGMENT OVERRUN"_sv,
+        "INVALID TSS EXCEPTION"_sv,
+        "SEGMENT NOT PRESENT"_sv,
+        "STACK FAULT EXCEPTION"_sv,
+        "GENERAL PROTECTION EXCEPTION"_sv,
+        "PAGE FAULT EXCEPTION"_sv,
+        "FPU FLOAT-POINT ERROR"_sv,
         "", // reserved
-        "alignment check exception"_sv,
-        "machine-check exception"_sv,
-        "simd floating-point exception"_sv,
-        "virtualization exception"_sv,
-        "control protection exception"_sv
+        "ALIGNMENT CHECK EXCEPTION"_sv,
+        "MACHINE-CHECK EXCEPTION"_sv,
+        "SIMD FLOATING-POINT EXCEPTION"_sv,
+        "VIRTUALIZATION EXCEPTION"_sv,
+        "CONTROL PROTECTION EXCEPTION"_sv
     };
 
     panic(messages[registers->interruptID]);
@@ -71,3 +71,4 @@ void isr::install(IDT& idt)
 
     idt.set_entry(15, handle_generic_interrupt, 0x8E);
 }
+
