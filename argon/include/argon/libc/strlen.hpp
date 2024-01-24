@@ -4,7 +4,7 @@
 
 namespace libc {
 
-constexpr auto strlen(auto const* string) noexcept
+constexpr auto strlen(auto const* string)
 {
     auto length = 0zu;
 

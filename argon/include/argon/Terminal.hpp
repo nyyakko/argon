@@ -8,18 +8,18 @@
 class Terminal
 {
 public:
-    Terminal() noexcept
+    Terminal()
     {
         VGA::initialize();
     }
 
 public:
-    static Terminal& initialize() noexcept
+    static Terminal& initialize()
     {
         static Terminal the {};
         return the;
     }
 
-    static void put(StringView const data, VGAColor const foreground = VGAColor::LIGHT_GREY, VGAColor const background = VGAColor::BLACK) noexcept;
-    static void putln(StringView const data, VGAColor const foreground = VGAColor::LIGHT_GREY, VGAColor const background = VGAColor::BLACK) noexcept;
+    static void put(StringView const data, VGAColor const foreground = VGAColor::LIGHT_GREY, VGAColor const background = VGAColor::BLACK);
+    static void putln(StringView const data, VGAColor const foreground = VGAColor::LIGHT_GREY, VGAColor const background = VGAColor::BLACK);
 };

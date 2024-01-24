@@ -1,6 +1,6 @@
 #include "Terminal.hpp"
 
-void Terminal::put(StringView const data, VGAColor const foreground, VGAColor const background) noexcept
+void Terminal::put(StringView const data, VGAColor const foreground, VGAColor const background)
 {
     for (auto index = 0zu; index < data.size(); index++)
     {
@@ -8,7 +8,7 @@ void Terminal::put(StringView const data, VGAColor const foreground, VGAColor co
     }
 }
 
-void Terminal::putln(StringView const data, VGAColor const foreground, VGAColor const background) noexcept
+void Terminal::putln(StringView const data, VGAColor const foreground, VGAColor const background)
 {
     put(data, foreground, background);
     put("\n"_sv, foreground, background);

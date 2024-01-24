@@ -8,13 +8,13 @@ namespace libc {
 
     }
 
-    inline int rand(void) noexcept
+    inline int rand(void)
     {
         next = next * 1103515245 + 12345;
         return (next / 65536) % 32768;
     }
 
-    inline void srand(unsigned int seed) noexcept
+    inline void srand(unsigned int seed)
     {
         next = seed;
     }

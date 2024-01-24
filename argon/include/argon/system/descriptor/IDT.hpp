@@ -9,7 +9,7 @@ namespace {
 
 extern "C" void load_idt(uint32_t address);
 
-inline void interrupt_generic() noexcept
+inline void interrupt_generic()
 {
     Terminal::putln("unknown interrupt");
 }
@@ -29,17 +29,17 @@ class IDT
 {
     static constexpr auto IDT_MAX_DESCRIPTORS = 256;
 
-    IDT() noexcept;
+    IDT();
 
 public:
-    static IDT& initialize() noexcept
+    static IDT& initialize()
     {
         static IDT the {};
         load_idt(reinterpret_cast<uint32_t>(&the.table_m));
         return the;
     }
 
-    void set_entry(size_t const index, void(*isr)(), uint8_t const flags) noexcept;
+    void set_entry(size_t const index, void(*isr)(), uint8_t const flags);
 
 private:
     struct [[gnu::packed]] IDTTable

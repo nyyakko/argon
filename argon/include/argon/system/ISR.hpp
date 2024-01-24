@@ -4,7 +4,7 @@
 
 namespace isr {
 
-void install(IDT& idt) noexcept;
+void install(IDT& idt);
 
 void _0();
 void _1();

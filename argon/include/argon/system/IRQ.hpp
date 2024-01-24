@@ -4,6 +4,6 @@
 
 namespace irq {
 
-void install(IDT& idt) noexcept;
+void install(IDT& idt);
 
 }

@@ -2,12 +2,12 @@
 
 #include "hardware/io/IO.hpp"
 
-VGA::VGA() noexcept
+VGA::VGA()
 {
     this->clear_buffer();
 }
 
-void VGA::clear_buffer(VGAColor background) noexcept
+void VGA::clear_buffer(VGAColor background)
 {
     for (size_t y = 0; y < HEIGHT; y++)
     {
@@ -18,7 +18,7 @@ void VGA::clear_buffer(VGAColor background) noexcept
     set_cursor_position(0, 0);
 }
 
-void VGA::put_entry_at(VGAEntry const entry) noexcept
+void VGA::put_entry_at(VGAEntry const entry)
 {
     auto const position = y_s * WIDTH + x_s;
 

@@ -3,7 +3,7 @@
 #include "system/ISR.hpp"
 #include "system/IRQ.hpp"
 
-IDT::IDT() noexcept:
+IDT::IDT():
     table_m ({
         .limit = sizeof(entries_m) - 1,
         .base  = reinterpret_cast<uint32_t>(entries_m)
@@ -18,7 +18,7 @@ IDT::IDT() noexcept:
     irq::install(*this);
 }
 
-void IDT::set_entry(size_t const index, void(*isr)(), uint8_t const flags) noexcept
+void IDT::set_entry(size_t const index, void(*isr)(), uint8_t const flags)
 {
     auto* entry = &entries_m[index];
 

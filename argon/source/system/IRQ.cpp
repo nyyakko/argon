@@ -2,15 +2,15 @@
 
 #include "hardware/io/IO.hpp"
 
-static void remap() noexcept;
+static void remap();
 
-void irq::install(IDT& idt) noexcept
+void irq::install(IDT& idt)
 {
     (void)idt;
     remap();
 }
 
-static void remap() noexcept
+static void remap()
 {
     outb(0x20, 0x11);
     outb(0xA0, 0x11);

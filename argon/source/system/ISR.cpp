@@ -2,7 +2,7 @@
 
 #include "Panic.hpp"
 
-void isr::install(IDT& idt) noexcept
+void isr::install(IDT& idt)
 {
     idt.set_entry(0, isr::_0, 0x8E);
     idt.set_entry(1, isr::_1, 0x8E);

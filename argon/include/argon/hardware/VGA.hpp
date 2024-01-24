@@ -12,17 +12,17 @@ class VGA
     static constexpr size_t WIDTH  = 80;
     static constexpr size_t HEIGHT = 25;
 
-    VGA() noexcept;
+    VGA();
 
 public:
-    static VGA& initialize() noexcept
+    static VGA& initialize()
     {
         static VGA the {};
         return the;
     }
 
-    static void put_entry_at(VGAEntry const entry) noexcept;
-    static void clear_buffer(VGAColor const background = VGAColor::BLACK) noexcept;
+    static void put_entry_at(VGAEntry const entry);
+    static void clear_buffer(VGAColor const background = VGAColor::BLACK);
 
     static size_t x_s;
     static size_t y_s;

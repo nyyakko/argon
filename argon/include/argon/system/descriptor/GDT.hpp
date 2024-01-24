@@ -23,10 +23,10 @@ class GDT
 {
     static constexpr auto GDT_MAX_DESCRIPTORS = 8;
 
-    GDT() noexcept;
+    GDT();
 
 public:
-    static GDT& initialize() noexcept
+    static GDT& initialize()
     {
         static GDT the {};
         load_gdt(reinterpret_cast<uint32_t>(&the.table_m));
@@ -34,7 +34,7 @@ public:
     }
 
 private:
-    void set_entry(size_t const index, uint32_t const base, uint32_t const limit, uint8_t const access, uint8_t const granularity) noexcept;
+    void set_entry(size_t const index, uint32_t const base, uint32_t const limit, uint8_t const access, uint8_t const granularity);
 
     struct [[gnu::packed]] GDTTable
     {

@@ -2,7 +2,7 @@
 
 namespace libc {
 
-constexpr bool strcmp(char const* lhs, char const* rhs) noexcept
+constexpr bool strcmp(char const* lhs, char const* rhs)
 {
     auto const fnStrlen = [] (auto const* string) constexpr {
         auto length = 0zu;

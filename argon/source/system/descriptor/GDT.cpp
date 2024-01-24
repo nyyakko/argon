@@ -1,6 +1,6 @@
 #include "system/descriptor/GDT.hpp"
 
-GDT::GDT() noexcept:
+GDT::GDT():
     table_m ({
         .limit = sizeof(entries_m) - 1,
         .base  = reinterpret_cast<uint32_t>(entries_m)
@@ -13,7 +13,7 @@ GDT::GDT() noexcept:
     this->set_entry(4, 0, 0xFFFF'FFFF, 0xF2, 0xCF);
 }
 
-void GDT::set_entry(size_t const index, uint32_t const base, uint32_t const limit, uint8_t const access, uint8_t const granularity) noexcept
+void GDT::set_entry(size_t const index, uint32_t const base, uint32_t const limit, uint8_t const access, uint8_t const granularity)
 {
     auto* entry = &entries_m[index];
 
