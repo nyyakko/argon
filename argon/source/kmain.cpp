@@ -9,13 +9,12 @@
 extern "C" void kmain(void)
 {
     Terminal::initialize();
-    Terminal::putln("Hello, Terminal!");
 
     GDT::initialize();
-    Terminal::putln("Hello, GDT!");
+    Terminal::putln("initialized GDT");
 
     IDT::initialize();
-    Terminal::putln("Hello, IDT!");
+    Terminal::putln("initialized IDT");
 
     Terminal::putln("Hello, Kernel!", VGAColor::LIGHT_GREEN);
 }
