@@ -3,9 +3,16 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "Terminal.hpp"
+
 namespace {
 
 extern "C" void load_idt(uint32_t address);
+
+inline void interrupt_generic() noexcept
+{
+    Terminal::putln("unknown interrupt");
+}
 
 }
 

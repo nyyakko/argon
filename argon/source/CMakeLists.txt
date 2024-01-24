@@ -4,9 +4,10 @@ add_subdirectory(system)
 set(DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(argon_SourceFiles ${argon_SourceFiles}
-    "${DIR}/kmain.cpp"
+    "${DIR}/Panic.cpp"
     "${DIR}/Terminal.cpp"
     "${DIR}/boot.s"
+    "${DIR}/kmain.cpp"
 
     PARENT_SCOPE
 )

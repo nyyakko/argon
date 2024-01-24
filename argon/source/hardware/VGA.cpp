@@ -1,6 +1,6 @@
 #include "hardware/VGA.hpp"
 
-#include "hardware/io/PortIO.hpp"
+#include "hardware/io/IO.hpp"
 
 VGA::VGA() noexcept
 {
@@ -46,10 +46,10 @@ void set_cursor_position(size_t const x, size_t const y)
 {
     auto const position = 80 * y + x;
 
-    io::outb(io::ports::FB_COMMAND_PORT, 14);
-    io::outb(io::ports::FB_DATA_PORT, (position >> 8) & 0x00FF);
-    io::outb(io::ports::FB_COMMAND_PORT, 15);
-    io::outb(io::ports::FB_DATA_PORT, position & 0x00FF);
+    outb(port::FB_COMMAND, 14);
+    outb(port::FB_DATA, (position >> 8) & 0x00FF);
+    outb(port::FB_COMMAND, 15);
+    outb(port::FB_DATA, position & 0x00FF);
 
     VGA::x_s = x;
     VGA::y_s = y;

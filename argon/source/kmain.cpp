@@ -2,11 +2,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "libcpp/StringView.hpp"
-
+#include "Terminal.hpp"
 #include "system/descriptor/GDT.hpp"
 #include "system/descriptor/IDT.hpp"
-#include "Terminal.hpp"
 
 extern "C" void kmain(void)
 {
@@ -19,6 +17,6 @@ extern "C" void kmain(void)
     IDT::initialize();
     Terminal::putln("Hello, IDT!");
 
-    Terminal::putln("Hello, Kernel!");
+    Terminal::putln("Hello, Kernel!", VGAColor::LIGHT_GREEN);
 }
 

@@ -1,9 +1,9 @@
-#include "system/Panic.hpp"
+#include "Panic.hpp"
 
 #include "libc/random.hpp"
 
 #include "hardware/VGA.hpp"
-#include "hardware/io/PortIO.hpp"
+#include "hardware/io/IO.hpp"
 #include "Terminal.hpp"
 
 void panic(StringView const message)
@@ -18,13 +18,11 @@ void panic(StringView const message)
         "Would you look at that! I crashed!"_sv,
         "Well, that escalated quickly! I think I broke something."_sv,
         "No cookies for me :^("_sv,
-        "My code is so fast, it just broke the space-time continuum."_sv,
         "Spicy!"_sv,
         "Just added extra spice to the code. Hope you like it."_sv,
         "Aliens must have hacked my computer... It's the only explanation."_sv,
         "My bad, wrong button."_sv,
         "Cookies mysteriously disappeared while I was away. Definitely not me."_sv,
-        "I tried juggling with the server cables. It didn't end well."_sv,
         "Oops, my bad! I promise, I'm not usually this clumsy."_sv,
         "I may have accidentally created a black hole. Oops!"_sv,
         "Sorry... I'll do better next time!"_sv,
@@ -36,8 +34,8 @@ void panic(StringView const message)
 
     auto constexpr messagesCount = sizeof(messages) / sizeof(StringView);
 
-    io::outb(0x70, 0x00);
-    libc::srand(io::inb(0x71));
+    outb(port::CMOS_COMMAND, port::cmos::SECONDS);
+    libc::srand(inb(port::CMOS_DATA));
 
     VGA::clear_buffer();
     Terminal::putln(messages[static_cast<uint32_t>(libc::rand()) % messagesCount]);
