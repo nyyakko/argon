@@ -16,6 +16,14 @@ inline void interrupt_generic()
 
 }
 
+struct Registers
+{
+    unsigned int GS, FS, ES, DS;
+    unsigned int EDI, ESI, EBP, ESP, EBX, EDX, ECX, EAX;
+    unsigned int interruptID, errorCode;
+    unsigned int EIP, CS, eflags, userESP, SS;
+};
+
 struct [[gnu::packed]] IDTEntry
 {
     uint16_t isrLow {};

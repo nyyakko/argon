@@ -9,11 +9,6 @@ IDT::IDT():
         .base  = reinterpret_cast<uint32_t>(entries_m)
     })
 {
-    for (auto index = 0zu; index != IDT_MAX_DESCRIPTORS; index += 1)
-    {
-        set_entry(index, interrupt_generic, 0x8E);
-    }
-
     isr::install(*this);
     irq::install(*this);
 }

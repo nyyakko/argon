@@ -2,134 +2,72 @@
 
 #include "Panic.hpp"
 
+extern "C" void handle_generic_interrupt()
+{
+    Terminal::putln("unknown interrupt");
+}
+
+extern "C" void handle_panicking_interrupt(Registers const* registers)
+{
+    constexpr static StringView messages[] =
+    {
+        "divide by zero"_sv,
+        "debug error"_sv,
+        "nmi interrupt"_sv,
+        "breakpoint"_sv,
+        "overflow"_sv,
+        "bound range exceeded"_sv,
+        "invalid opcode exception"_sv,
+        "device not available exception"_sv,
+        "coprocessor segment overrun"_sv,
+        "invalid tss exception"_sv,
+        "segment not present"_sv,
+        "stack fault exception"_sv,
+        "general protection exception"_sv,
+        "page fault exception"_sv,
+        "fpu float-point error"_sv,
+        "", // reserved
+        "alignment check exception"_sv,
+        "machine-check exception"_sv,
+        "simd floating-point exception"_sv,
+        "virtualization exception"_sv,
+        "control protection exception"_sv
+    };
+
+    panic(messages[registers->interruptID]);
+}
+
 void isr::install(IDT& idt)
 {
-    idt.set_entry(0, isr::_0, 0x8E);
-    idt.set_entry(1, isr::_1, 0x8E);
-    idt.set_entry(2, isr::_2, 0x8E);
-    idt.set_entry(3, isr::_3, 0x8E);
-    idt.set_entry(4, isr::_4, 0x8E);
-    idt.set_entry(5, isr::_5, 0x8E);
-    idt.set_entry(6, isr::_6, 0x8E);
-    idt.set_entry(7, isr::_7, 0x8E);
-    idt.set_entry(8, isr::_8, 0x8E);
-    idt.set_entry(9, isr::_9, 0x8E);
-    idt.set_entry(10, isr::_10, 0x8E);
-    idt.set_entry(11, isr::_11, 0x8E);
-    idt.set_entry(12, isr::_12, 0x8E);
-    idt.set_entry(13, isr::_13, 0x8E);
-    idt.set_entry(14, isr::_14, 0x8E);
-    idt.set_entry(15, interrupt_generic, 0x8E);
-    idt.set_entry(16, isr::_16, 0x8E);
-    idt.set_entry(17, isr::_17, 0x8E);
-    idt.set_entry(18, isr::_18, 0x8E);
-    idt.set_entry(19, isr::_19, 0x8E);
-    idt.set_entry(20, isr::_20, 0x8E);
-    idt.set_entry(21, isr::_21, 0x8E);
-}
+// ok. what the actual heck is this.
+#define _INTERRUPT_LIST                                                 \
+    X(0)  X(1)  X(2)  X(3)  X(4)  X(5)  X(6)                            \
+    X(7)  X(8)  X(9)  X(10) X(11) X(12) X(13)                           \
+    X(14) X(16) X(17) X(18) X(19) X(20)
 
-void isr::_0()
-{
-    panic("divide by zero");
-}
+#define X(entry)                                                        \
+    idt.set_entry(entry, [] () {                                        \
+        asm volatile ("pushw $0");                                      \
+        asm volatile ("pushw $" #entry);                                \
+                                                                        \
+        asm volatile ("pusha; push %ds; push %es; push %fs; push %gs"); \
+                                                                        \
+        asm volatile (                                                  \
+            "; mov $0x10, %ax"                                          \
+            "; mov %ax, %ds"                                            \
+            "; mov %ax, %es"                                            \
+            "; mov %ax, %fs"                                            \
+            "; mov %ax, %gs"                                            \
+                                                                        \
+            "; mov %esp, %eax"                                          \
+            "; push %eax"                                               \
+            "; call handle_panicking_interrupt"                         \
+            "; pop %eax");                                              \
+                                                                        \
+        asm volatile ("pop %gs; pop %fs; pop %es; pop %ds; popa");      \
+    }, 0x8E);
+    _INTERRUPT_LIST
+#undef X
 
-void isr::_1()
-{
-    panic("debug error");
+    idt.set_entry(15, handle_generic_interrupt, 0x8E);
 }
-
-void isr::_2()
-{
-    panic("nmi interrupt");
-}
-
-void isr::_3()
-{
-    panic("breakpoint");
-}
-
-void isr::_4()
-{
-    panic("overflow");
-}
-
-void isr::_5()
-{
-    panic("bound range exceeded");
-}
-
-void isr::_6()
-{
-    panic("invalid opcode exception");
-}
-
-void isr::_7()
-{
-    panic("device not available exception");
-}
-
-void isr::_8()
-{
-    panic("Double Fault Exception");
-}
-
-void isr::_9()
-{
-    panic("coprocessor segment overrun");
-}
-
-void isr::_10()
-{
-    panic("invalid tss exception");
-}
-
-void isr::_11()
-{
-    panic("segment not present");
-}
-
-void isr::_12()
-{
-    panic("stack fault exception");
-}
-
-void isr::_13()
-{
-    panic("general protection exception");
-}
-
-void isr::_14()
-{
-    panic("page fault exception");
-}
-
-void isr::_16()
-{
-    panic("fpu float-point error");
-}
-
-void isr::_17()
-{
-    panic("alignment check exception");
-}
-
-void isr::_18()
-{
-    panic("machine-check exception");
-}
-
-void isr::_19()
-{
-    panic("simd floating-point exception");
-}
-
-void isr::_20()
-{
-    panic("virtualization exception");
-}
-
-void isr::_21()
-{
-    panic("control protection exception");
-}
-
