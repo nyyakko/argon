@@ -1,10 +1,9 @@
 #pragma once
 
 #include <stdbool.h>
-#include <stddef.h>
 #include <stdint.h>
 
-#include "libcpp/conversion/BitCast.hpp"
+#include <libcpp/conversion/BitCast.hpp>
 
 #include "VGAColor.hpp"
 
@@ -16,18 +15,14 @@ public:
     {
     }
 
-    // cppcheck-suppress functionConst
-    explicit constexpr operator uint16_t(this auto self)
+    explicit constexpr operator uint16_t() const
     {
-        return bit_cast<uint16_t>(self);
+        return bit_cast<uint16_t>(*this);
     }
 
-    // cppcheck-suppress functionStatic
-    auto constexpr byte(this auto self) { return self.byte_m; }
-    // cppcheck-suppress functionStatic
-    auto constexpr foreground(this auto self) { return self.foreground_m; }
-    // cppcheck-suppress functionStatic
-    auto constexpr background(this auto self) { return self.backgroun_m; }
+    auto constexpr byte() const { return this->byte_m; }
+    auto constexpr foreground() const { return this->foreground_m; }
+    auto constexpr background() const { return this->backgroun_m; }
 
 private:
     [[maybe_unused]]char byte_m {};

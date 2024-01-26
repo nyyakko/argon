@@ -3,18 +3,18 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "VGAEntry.hpp"
+#include <libcpp/Pair.hpp>
 
-inline void set_cursor_position(size_t const x, size_t const y);
+#include "VGAEntry.hpp"
 
 class VGA
 {
-    static constexpr size_t WIDTH  = 80;
-    static constexpr size_t HEIGHT = 25;
-
     VGA();
 
 public:
+    static constexpr size_t WIDTH  = 80;
+    static constexpr size_t HEIGHT = 25;
+
     static VGA& initialize()
     {
         static VGA the {};
@@ -23,6 +23,8 @@ public:
 
     static void put_entry_at(VGAEntry const entry);
     static void clear_buffer(VGAColor const background = VGAColor::BLACK);
+    static void set_cursor_position(size_t const x, size_t const y);
+    static Pair<size_t, size_t> get_cursor_position();
 
     static size_t x_s;
     static size_t y_s;
@@ -32,7 +34,6 @@ private:
 };
 
 inline auto VGA::buffer_s = reinterpret_cast<uint16_t*>(0xB8000);
-inline auto VGA::x_s      = 0zu;
-inline auto VGA::y_s      = 0zu;
+inline auto VGA::x_s      = 0u;
+inline auto VGA::y_s      = 0u;
 
-void set_cursor_position(size_t const x, size_t const y);

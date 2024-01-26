@@ -25,10 +25,11 @@ _start:
     mov $stack_top, %esp
 
     call kmain
-
     cli
-1:  hlt
-    jmp 1b
+
+loop:
+    hlt
+    jmp loop
 
 .size _start, . - _start
 

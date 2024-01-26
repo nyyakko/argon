@@ -42,4 +42,5 @@ set(argon_CompilerOptions ${argon_CompilerOptions}
 # find_package(package CONFIG REQUIRED)
 # set(argon_ExternalLibraries)
 
+add_subdirectory(external)
 add_subdirectory(argon)

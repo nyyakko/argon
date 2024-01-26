@@ -1,6 +1,8 @@
 #include "hardware/VGA.hpp"
 
-#include "hardware/io/IO.hpp"
+#include <libcpp/Iota.hpp>
+
+#include "hardware/IO.hpp"
 
 VGA::VGA()
 {
@@ -15,34 +17,43 @@ void VGA::clear_buffer(VGAColor background)
             buffer_s[y * WIDTH + x] = static_cast<uint16_t>(VGAEntry(' ', VGAColor::LIGHT_GREY, background));
     }
 
-    set_cursor_position(0, 0);
+    VGA::set_cursor_position(0, 0);
 }
 
 void VGA::put_entry_at(VGAEntry const entry)
 {
     auto const position = y_s * WIDTH + x_s;
 
-    if (entry.byte() == '\n' || entry.byte() == '\b')
+    switch (entry.byte())
     {
-        if (entry.byte() == '\n')
-        {
-            set_cursor_position(0, (y_s < HEIGHT) ? y_s += 1 : 0);
-        }
-        else if (entry.byte() == '\b')
-        {
-            buffer_s[position - 1] = static_cast<uint16_t>(VGAEntry(' '));
-            set_cursor_position(x_s - 1, y_s);
-        }
-
+    case '\n':
+        VGA::set_cursor_position(0, (y_s < HEIGHT) ? y_s += 1 : 0);
+        return;
+    case '\t':
+        for ([[maybe_unused]]auto _ : Iota(0, 4))
+            VGA::put_entry_at(VGAEntry(' '));
+        return;
+    case '\b':
+        // FIXME: maybe should return to previous line ?
+        VGA::set_cursor_position(x_s ? x_s -= 1 : 0, y_s);
+        buffer_s[position ? position - 1 : 0] = static_cast<uint16_t>(VGAEntry(' '));
         return;
     }
 
     buffer_s[position] = static_cast<uint16_t>(entry);
-    set_cursor_position((x_s < WIDTH) ? x_s += 1 : 0, y_s);
+
+    if (x_s < WIDTH)
+        x_s += 1;
+    else
+    {
+        x_s  = 0;
+        y_s += 1;
+    }
+
+    VGA::set_cursor_position(x_s, y_s);
 }
 
-
-void set_cursor_position(size_t const x, size_t const y)
+void VGA::set_cursor_position(size_t const x, size_t const y)
 {
     auto const position = 80 * y + x;
 
@@ -55,3 +66,7 @@ void set_cursor_position(size_t const x, size_t const y)
     VGA::y_s = y;
 }
 
+Pair<size_t, size_t> VGA::get_cursor_position()
+{
+    return { VGA::x_s, VGA::y_s };
+}

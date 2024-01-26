@@ -15,13 +15,13 @@ target_compile_features(kernel PRIVATE cxx_std_23)
 
 target_link_options(kernel PRIVATE ${argon_LinkerOptions})
 target_compile_options(kernel PRIVATE ${argon_CompilerOptions})
-target_link_libraries(kernel PRIVATE ${argon_ExternalLibraries})
+target_link_libraries(kernel PRIVATE ${argon_ExternalLibraries} libc libcpp)
 
 add_custom_command(TARGET kernel
     POST_BUILD
         COMMAND clang++
             -T ${CMAKE_CURRENT_SOURCE_DIR}/source/linker.ld
-            -o ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}.bin
+            -o ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/kernel.bin
             --target=i686-pc-unknown-elf
             -march=i686
             -O2

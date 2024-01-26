@@ -1,9 +1,9 @@
 #include "Panic.hpp"
 
-#include "libc/random.hpp"
+#include <libc/random.hpp>
 
 #include "hardware/VGA.hpp"
-#include "hardware/io/IO.hpp"
+#include "hardware/IO.hpp"
 #include "Terminal.hpp"
 
 void panic(StringView const message)
