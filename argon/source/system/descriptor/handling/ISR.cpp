@@ -1,6 +1,6 @@
-#include "descriptor/handling/ISR.hpp"
+#include "system/descriptor/handling/ISR.hpp"
 
-#include "Panic.hpp"
+#include "system/Panic.hpp"
 
 #define ISR_LIST              \
 X(0)  X(1)  X(2)  X(3)  X(4)  \
@@ -12,7 +12,7 @@ X(16) X(17) X(18) X(19) X(20)
 ISR_LIST
 #undef X
 
-extern "C" void handle_panicking_interrupt(Registers const* registers)
+extern "C" void handle_panicking_interrupt(InterruptStack const* interruptStack)
 {
     static constexpr auto RESERVED_INTERRUPT = 15;
 
@@ -41,8 +41,8 @@ extern "C" void handle_panicking_interrupt(Registers const* registers)
         "CONTROL PROTECTION EXCEPTION"_sv
     };
 
-    if (registers->interruptID != RESERVED_INTERRUPT)
-        panic(messages[registers->interruptID]);
+    if (interruptStack->ID != RESERVED_INTERRUPT)
+        panic(messages[interruptStack->ID]);
 }
 
 void isr::install(IDT& idt)

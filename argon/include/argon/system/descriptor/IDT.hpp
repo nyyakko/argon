@@ -16,21 +16,21 @@ inline void interrupt_generic()
 
 }
 
-struct [[gnu::packed]] Registers
+struct [[gnu::packed]] InterruptStack
 {
-    unsigned int GS, FS, ES, DS;
-    unsigned int EDI, ESI, EBP, ESP, EBX, EDX, ECX, EAX;
-    unsigned int interruptID, errorCode;
-    unsigned int EIP, CS, eflags, userESP, SS;
+    uint32_t GS, FS, ES, DS;
+    uint32_t EDI, ESI, EBP, ESP, EBX, EDX, ECX, EAX;
+    uint32_t ID, errorCode;
+    uint32_t EIP, CS, eflags, userESP, SS;
 };
 
 struct [[gnu::packed]] IDTEntry
 {
-    uint16_t isrLow {};
-    uint16_t kernelCs {};
-    uint8_t  reserved {};
-    uint8_t  attributes {};
-    uint16_t isrHigh {};
+    uint16_t isrLow;
+    uint16_t kernelCs;
+    uint8_t  reserved;
+    uint8_t  attributes;
+    uint16_t isrHigh;
 };
 
 class IDT
@@ -47,7 +47,7 @@ public:
         return the;
     }
 
-    using irq_handler_t = void(*)(Registers const*);
+    using irq_handler_t = void(*)(InterruptStack const*);
 
     void set_entry(size_t const index, void(*isr)(), uint8_t const flags);
     static void set_irq_handler(size_t const index, irq_handler_t handler);

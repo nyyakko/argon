@@ -31,7 +31,7 @@ static auto scancode_to_ascii(auto const scanCode)
     return '\0';
 }
 
-void keyboard_driver(const Registers*)
+void keyboard_driver(const InterruptStack*)
 {
     auto const scanCode = inb(port::BIOS_IO);
 

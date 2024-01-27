@@ -1,4 +1,4 @@
-#include "descriptor/GDT.hpp"
+#include "system/descriptor/GDT.hpp"
 
 GDT::GDT():
     table_m ({

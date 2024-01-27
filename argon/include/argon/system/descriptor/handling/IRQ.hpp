@@ -1,6 +1,6 @@
 #pragma once
 
-#include "descriptor/IDT.hpp"
+#include "system/descriptor/IDT.hpp"
 
 namespace irq {
 

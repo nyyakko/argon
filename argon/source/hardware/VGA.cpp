@@ -20,7 +20,7 @@ void VGA::clear_buffer(VGAColor background)
     VGA::set_cursor_position(0, 0);
 }
 
-void VGA::put_entry_at(VGAEntry const entry)
+void VGA::put_entry(VGAEntry const entry)
 {
     auto const position = y_s * WIDTH + x_s;
 
@@ -31,12 +31,12 @@ void VGA::put_entry_at(VGAEntry const entry)
         return;
     case '\t':
         for ([[maybe_unused]]auto _ : Iota(0, 4))
-            VGA::put_entry_at(VGAEntry(' '));
+            VGA::put_entry(VGAEntry(' '));
         return;
     case '\b':
         // FIXME: maybe should return to previous line ?
         VGA::set_cursor_position(x_s ? x_s -= 1 : 0, y_s);
-        buffer_s[position ? position - 1 : 0] = static_cast<uint16_t>(VGAEntry(' '));
+        buffer_s[y_s * WIDTH + x_s] = static_cast<uint16_t>(VGAEntry(' '));
         return;
     }
 

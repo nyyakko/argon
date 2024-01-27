@@ -1,15 +1,16 @@
+#include <libcpp/Iota.hpp>
+
 #include "Terminal.hpp"
-#include "descriptor/GDT.hpp"
-#include "descriptor/IDT.hpp"
 #include "hardware/IO.hpp"
 #include "hardware/hid/KeyBoard.hpp"
+#include "system/descriptor/GDT.hpp"
+#include "system/descriptor/IDT.hpp"
 
-void clock_driver(Registers const*) {}
+void clock_driver(InterruptStack const*) { }
 
 extern "C" void kmain(void)
 {
     Terminal::initialize();
-
     GDT::initialize();
     Terminal::putln("initialized GDT");
     IDT::initialize();

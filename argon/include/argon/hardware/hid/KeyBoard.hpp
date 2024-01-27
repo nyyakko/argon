@@ -1,5 +1,5 @@
 #pragma once
 
-#include "descriptor/IDT.hpp"
+#include "system/descriptor/IDT.hpp"
 
-void keyboard_driver(Registers const*);
+void keyboard_driver(InterruptStack const*);

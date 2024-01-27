@@ -1,4 +1,4 @@
-#include "Panic.hpp"
+#include "system/Panic.hpp"
 
 #include <libc/random.hpp>
 
@@ -38,8 +38,7 @@ void panic(StringView const message)
     libc::srand(inb(port::CMOS_DATA));
 
     VGA::clear_buffer();
-    Terminal::putln(messages[static_cast<uint32_t>(libc::rand()) % messagesCount]);
-    Terminal::put("\n");
+    Terminal::putf("%v\n\n", messages[static_cast<uint32_t>(libc::rand()) % messagesCount]);
 
     Terminal::put("panic: ");
     Terminal::putln(message, VGAColor::LIGHT_RED);

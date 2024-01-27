@@ -21,7 +21,7 @@ public:
         return the;
     }
 
-    static void put_entry_at(VGAEntry const entry);
+    static void put_entry(VGAEntry const entry);
     static void clear_buffer(VGAColor const background = VGAColor::BLACK);
     static void set_cursor_position(size_t const x, size_t const y);
     static Pair<size_t, size_t> get_cursor_position();
