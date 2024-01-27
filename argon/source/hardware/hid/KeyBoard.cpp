@@ -1,5 +1,6 @@
 #include "hardware/hid/KeyBoard.hpp"
 
+#include "Terminal.hpp"
 #include "hardware/IO.hpp"
 
 struct ScanCode
@@ -31,7 +32,7 @@ static auto scancode_to_ascii(auto const scanCode)
     return '\0';
 }
 
-void keyboard_driver(const InterruptStack*)
+void keyboard_driver(InterruptStack const*)
 {
     auto const scanCode = inb(port::BIOS_IO);
 

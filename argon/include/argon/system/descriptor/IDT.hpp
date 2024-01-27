@@ -3,16 +3,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "Terminal.hpp"
-
 namespace {
 
 extern "C" void load_idt(uint32_t address);
-
-inline void interrupt_generic()
-{
-    Terminal::putln("unknown interrupt");
-}
 
 }
 
@@ -50,7 +43,7 @@ public:
     using irq_handler_t = void(*)(InterruptStack const*);
 
     void set_entry(size_t const index, void(*isr)(), uint8_t const flags);
-    static void set_irq_handler(size_t const index, irq_handler_t handler);
+    static void set_irq_handler(size_t const index, irq_handler_t const handler);
     static irq_handler_t get_irq_handler(size_t const index);
 
 private:

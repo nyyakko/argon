@@ -3,7 +3,7 @@
 #include <libcpp/Iota.hpp>
 #include <libcpp/Numerical.hpp>
 
-void Terminal::put(char data, VGAColor const foreground, VGAColor const background)
+void Terminal::put(char const data, VGAColor const foreground, VGAColor const background)
 {
     VGA::put_entry(VGAEntry(data, foreground, background));
 }
@@ -16,9 +16,9 @@ void Terminal::put(StringView const data, VGAColor const foreground, VGAColor co
     }
 }
 
-void Terminal::putf(StringView format, ...)
+void Terminal::putf(StringView const format, ...)
 {
-    char* variadic = reinterpret_cast<char*>(&format) + sizeof(StringView);
+    char const* variadic = reinterpret_cast<char const*>(&format) + sizeof(StringView);
 
     for (auto index = 0zu; index < format.size(); index += 1)
     {
@@ -29,7 +29,7 @@ void Terminal::putf(StringView format, ...)
             switch (format.data()[index += 1])
             {
             case 'd': {
-                auto number = reverse_number(*reinterpret_cast<int*>(variadic));
+                auto number = reverse_number(*reinterpret_cast<int const*>(variadic));
 
                 do
                 {
@@ -41,7 +41,7 @@ void Terminal::putf(StringView format, ...)
                 break;
             }
             case 'v': {
-                Terminal::put(*reinterpret_cast<StringView*>(variadic));
+                Terminal::put(*reinterpret_cast<StringView const*>(variadic));
                 variadic += sizeof(StringView);
                 break;
             }

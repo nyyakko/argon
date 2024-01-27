@@ -24,12 +24,12 @@ void IDT::set_entry(size_t const index, void(*isr)(), uint8_t const flags)
     entry->reserved   = 0;
 }
 
-void IDT::set_irq_handler(const size_t index, irq_handler_t handler)
+void IDT::set_irq_handler(size_t const index, irq_handler_t const handler)
 {
     IDT::handlers_m[index] = handler;
 }
 
-IDT::irq_handler_t IDT::get_irq_handler(const size_t index)
+IDT::irq_handler_t IDT::get_irq_handler(size_t const index)
 {
     return IDT::handlers_m[index];
 }

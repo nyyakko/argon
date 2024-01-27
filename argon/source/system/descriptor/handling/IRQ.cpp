@@ -1,5 +1,6 @@
 #include "system/descriptor/handling/IRQ.hpp"
 
+#include "Terminal.hpp"
 #include "hardware/IO.hpp"
 
 static void remap();

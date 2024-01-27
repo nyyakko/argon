@@ -1,6 +1,7 @@
 #pragma once
 
-#include "strlen.hpp"
 #include "memset.hpp"
+#include "memcpy.hpp"
+#include "strlen.hpp"
 #include "strcmp.hpp"
 

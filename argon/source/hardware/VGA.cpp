@@ -11,7 +11,7 @@ VGA::VGA()
     this->clear_buffer();
 }
 
-void VGA::clear_buffer(VGAColor background)
+void VGA::clear_buffer(VGAColor const background)
 {
     for (size_t y = 0; y < HEIGHT; y++)
     {

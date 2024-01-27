@@ -4,10 +4,10 @@
 
 class Iota
 {
-    constexpr explicit Iota(size_t current): current_m(current) {}
+    constexpr explicit Iota(size_t const current): current_m(current) {}
 
 public:
-    constexpr Iota(size_t minimum, size_t maximum):
+    constexpr Iota(size_t const minimum, size_t const maximum):
         minimum_m(minimum),
         maximum_m(maximum)
     {}
