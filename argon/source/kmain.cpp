@@ -24,10 +24,10 @@ extern "C" void kmain(void)
     auto const frequency = 60;
     auto const divisor   = 1193180 / frequency;
 
-    outb(0x43, 0x36);
+    outb(port::PIT_COMMAND, 0x36);
 
-    outb(0x40, uint8_t(divisor));
-    outb(0x40, uint8_t(divisor >> 8));
+    outb(port::PIT_DATA, uint8_t(divisor));
+    outb(port::PIT_DATA, uint8_t(divisor >> 8));
 
     asm ("sti");
 

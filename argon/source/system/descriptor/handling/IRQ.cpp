@@ -2,7 +2,7 @@
 
 #include "hardware/IO.hpp"
 
-void remap();
+static void remap();
 
 #define IRQ_LIST                              \
 X(0) X(1) X(2)  X(3)  X(4)  X(5)  X(6)  X(7)  \
@@ -41,7 +41,7 @@ void irq::install(IDT& idt)
 #undef X
 }
 
-void remap()
+static void remap()
 {
     outb(port::PIC1_COMMAND , 0x11);
     outb(port::PIC2_COMMAND , 0x11);

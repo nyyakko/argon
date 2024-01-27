@@ -35,9 +35,16 @@ void keyboard_driver(const InterruptStack*)
 {
     auto const scanCode = inb(port::BIOS_IO);
 
-    if (auto byte = scancode_to_ascii(scanCode))
+    if (!(scanCode & 0x80))
     {
-        Terminal::put(byte);
+        if (auto byte = scancode_to_ascii(scanCode))
+        {
+            Terminal::put(byte);
+        }
+    }
+    else
+    {
+        // released
     }
 }
 

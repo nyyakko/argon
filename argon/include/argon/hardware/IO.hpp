@@ -14,6 +14,8 @@ static constexpr auto PIC1_COMMAND = 0x20;
 static constexpr auto PIC1_DATA    = 0x21;
 static constexpr auto PIC2_COMMAND = 0xA0;
 static constexpr auto PIC2_DATA    = 0xA1;
+static constexpr auto PIT_COMMAND  = 0x43;
+static constexpr auto PIT_DATA     = 0x40;
 
     namespace cmos {
 

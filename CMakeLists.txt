@@ -16,12 +16,12 @@ include(remote_clone)
 # )
 
 set(argon_CompilerOptions ${argon_CompilerOptions}
-    --target=i686-pc-unknown-elf
-    -march=i686
+    -m32
     -ffreestanding
     -fno-exceptions
     -fno-threadsafe-statics
     -fno-rtti
+    -nostdlib
     -Werror
     -Wall
     -Wextra
