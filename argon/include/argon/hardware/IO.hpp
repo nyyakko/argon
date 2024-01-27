@@ -29,5 +29,5 @@ static constexpr auto PIC2_DATA    = 0xA1;
 
 }
 
-extern "C" uint8_t inb(uint16_t const port);
-extern "C" void outb(uint16_t const port, uint8_t const value);
+uint8_t inb(uint16_t const port);
+void outb(uint16_t const port, uint8_t const value);

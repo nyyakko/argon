@@ -12,16 +12,16 @@ extern "C" void kmain(void)
 {
     Terminal::initialize();
     GDT::initialize();
-    Terminal::putln("initialized GDT");
+    Terminal::putln("initialized GDT", VGAColor::LIGHT_GREEN);
     IDT::initialize();
-    Terminal::putln("initialized IDT");
+    Terminal::putln("initialized IDT\n", VGAColor::LIGHT_GREEN);
 
     Terminal::putln("Hello, Argon!");
 
     IDT::set_irq_handler(0, clock_driver);
     IDT::set_irq_handler(1, keyboard_driver);
 
-    auto const frequency = 50;
+    auto const frequency = 60;
     auto const divisor   = 1193180 / frequency;
 
     outb(0x43, 0x36);
