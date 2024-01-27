@@ -16,7 +16,7 @@ extern "C" void kmain(void)
     IDT::initialize();
     Terminal::putln("initialized IDT\n", VGAColor::LIGHT_GREEN);
 
-    Terminal::putln("Hello, Argon!");
+    Terminal::putln("Hello, Argon!\n");
 
     IDT::set_irq_handler(0, clock_driver);
     IDT::set_irq_handler(1, keyboard_driver);
