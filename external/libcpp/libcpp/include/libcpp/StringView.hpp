@@ -1,7 +1,6 @@
 #pragma once
 
-#include <libc/strlen.hpp>
-#include <libc/strcmp.hpp>
+#include <libc/string.hpp>
 
 class StringView
 {
@@ -9,7 +8,7 @@ public:
     // cppcheck-suppress noExplicitConstructor
     constexpr StringView(char const* string):
         data_m(string),
-        size_m(libc::strlen(string))
+        size_m(strlen(string))
     {
     }
 
@@ -18,7 +17,7 @@ public:
 
     constexpr auto operator==(StringView toCompare) const
     {
-        return libc::strcmp(this->data(), toCompare.data());
+        return strcmp(this->data(), toCompare.data());
     }
 
 private:

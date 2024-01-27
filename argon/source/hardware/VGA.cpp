@@ -1,8 +1,7 @@
 #include "hardware/VGA.hpp"
 
 #include <libcpp/Iota.hpp>
-#include <libc/memcpy.hpp>
-#include <libc/memset.hpp>
+#include <libc/string.hpp>
 
 #include "hardware/IO.hpp"
 
@@ -33,8 +32,8 @@ void VGA::put_entry(VGAEntry const entry)
             y_s += 1;
         else
         {
-            libc::memcpy(buffer_s, &buffer_s[WIDTH], (HEIGHT - 1) * WIDTH);
-            libc::memset(&buffer_s[(HEIGHT - 1) * WIDTH], static_cast<uint16_t>(VGAEntry(' ')), WIDTH);
+            memmove(buffer_s, &buffer_s[WIDTH], (HEIGHT - 1) * WIDTH);
+            memset(&buffer_s[(HEIGHT - 1) * WIDTH], static_cast<uint16_t>(VGAEntry(' ')), WIDTH);
         }
 
         VGA::set_cursor_position(0, y_s);
