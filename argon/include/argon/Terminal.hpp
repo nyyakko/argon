@@ -70,6 +70,9 @@ public:
     }
 
 private:
-    static void putf(StringView const, auto&&...) {};
+    static void putf(StringView const format)
+    {
+        Terminal::put(format);
+    }
 };
 
