@@ -7,3 +7,4 @@ namespace irq {
 void install(IDT& idt);
 
 }
+

@@ -33,3 +33,4 @@ static constexpr auto PIT_DATA     = 0x40;
 
 uint8_t inb(uint16_t const port);
 void outb(uint16_t const port, uint8_t const value);
+

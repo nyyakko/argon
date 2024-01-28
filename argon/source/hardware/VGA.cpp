@@ -79,3 +79,4 @@ Pair<size_t, size_t> VGA::get_cursor_position()
 {
     return { VGA::x_s, VGA::y_s };
 }
+

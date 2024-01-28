@@ -25,3 +25,4 @@ public:
     static void putf(StringView const format, ...);
     static void putln(StringView const data, VGAColor const foreground = VGAColor::LIGHT_GREY, VGAColor const background = VGAColor::BLACK);
 };
+

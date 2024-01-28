@@ -58,3 +58,4 @@ void Terminal::putln(StringView const data, VGAColor const foreground, VGAColor 
     put(data, foreground, background);
     put("\n"_sv, foreground, background);
 }
+

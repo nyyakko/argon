@@ -18,8 +18,8 @@ struct Array
     // cppcheck-suppress functionStatic
     constexpr auto size() const { return Size; }
 
-    auto& operator[](size_t index) { return values_m[index]; }
-    auto const& operator[](size_t index) const { return values_m[index]; }
+    constexpr auto& operator[](size_t index) { return values_m[index]; }
+    constexpr auto const& operator[](size_t index) const { return values_m[index]; }
 };
 
 template <class T, class... U>
