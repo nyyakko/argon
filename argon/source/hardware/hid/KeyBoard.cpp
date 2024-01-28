@@ -74,12 +74,9 @@ void keyboard_driver(InterruptStack const*)
         else
             Terminal::put(decode_special_key(scanCode));
     }
-    else
+    else switch (~(scanCode & 0x80) & scanCode)
     {
-        switch (~(scanCode & 0x80) & scanCode)
-        {
-        case 0x2A: shiftState = State::RELEASED;
-        }
+    case 0x2A: shiftState = State::RELEASED;
     }
 }
 

@@ -1,5 +1,3 @@
-#include <libcpp/Iota.hpp>
-
 #include "Terminal.hpp"
 #include "hardware/IO.hpp"
 #include "hardware/hid/KeyBoard.hpp"
@@ -11,6 +9,7 @@ void clock_driver(InterruptStack const*) {}
 extern "C" void kmain(void)
 {
     Terminal::initialize();
+
     GDT::initialize();
     Terminal::putln("initialized GDT", VGAColor::LIGHT_GREEN);
     IDT::initialize();

@@ -37,7 +37,7 @@ void panic(StringView const message)
     libc::srand(inb(port::CMOS_DATA));
 
     VGA::clear_buffer();
-    Terminal::putf("%v\n\n", messages[static_cast<uint32_t>(libc::rand()) % messages.size()]);
+    Terminal::putf("%s\n\n", messages[static_cast<uint32_t>(libc::rand()) % messages.size()]);
 
     Terminal::put("panic: ");
     Terminal::putln(message, VGAColor::LIGHT_RED);
