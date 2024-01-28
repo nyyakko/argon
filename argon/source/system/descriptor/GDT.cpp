@@ -13,15 +13,16 @@ GDT::GDT():
     this->set_entry(4, 0, 0xFFFF'FFFF, 0xF2, 0xCF);
 }
 
-void GDT::set_entry(size_t const index, uint32_t const base, uint32_t const limit, uint8_t const access, uint8_t const granularity)
+void GDT::set_entry(size_t const index, uint32_t const base, uint32_t const limit, Access const access, uint8_t const granularity)
 {
     auto* entry = &entries_m[index];
 
-    entry->segmentLimit = limit & 0xFFFF;
-    entry->baseLow      = base & 0xFFFF;
+    entry->segmentLimit = limit        & 0xFFFF;
+    entry->baseLow      = base         & 0xFFFF;
     entry->baseMiddle   = (base >> 16) & 0xFF;
     entry->access       = access;
     entry->granularity  = (limit >> 16) & 0x0F;
     entry->granularity  = entry->granularity | (granularity & 0xF0);
     entry->baseHigh     = (base >> 24 & 0xFF);
 }
+
