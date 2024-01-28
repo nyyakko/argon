@@ -6,13 +6,27 @@
 #include "system/descriptor/GDT.hpp"
 #include "system/descriptor/IDT.hpp"
 
-void clock_driver(InterruptStack const*) { }
+void clock_driver(InterruptStack const*)
+{
+    auto static tick = 0;
+
+    if (tick % (2 * 60) == 0)
+    {
+        auto static counter = 0;
+        auto [x, y] = VGA::get_cursor_position();
+        VGA::set_cursor_position(0, 0);
+        Terminal::putf("tick: %d", counter += 1);
+        VGA::set_cursor_position(x, y);
+    }
+
+    tick += 1;
+}
 
 extern "C" void kmain(void)
 {
     Terminal::initialize();
     GDT::initialize();
-    Terminal::putln("initialized GDT", VGAColor::LIGHT_GREEN);
+    Terminal::putln("\n\ninitialized GDT", VGAColor::LIGHT_GREEN);
     IDT::initialize();
     Terminal::putln("initialized IDT\n", VGAColor::LIGHT_GREEN);
 

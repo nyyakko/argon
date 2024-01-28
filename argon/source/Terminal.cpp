@@ -2,6 +2,7 @@
 
 #include <libcpp/Iota.hpp>
 #include <libcpp/Numerical.hpp>
+#include <libc/math.hpp>
 
 void Terminal::put(char const data, VGAColor const foreground, VGAColor const background)
 {
@@ -29,13 +30,15 @@ void Terminal::putf(StringView const format, ...)
             switch (format.data()[index += 1])
             {
             case 'd': {
-                auto number = reverse_number(*reinterpret_cast<int const*>(variadic));
+                auto number = *reinterpret_cast<int const*>(variadic);
 
-                do
+                for (auto exponent = number_size(number); exponent != 0; exponent -= 1)
                 {
-                    Terminal::put(char('0' + number % 10));
+                    auto const power = pow(10, exponent - 1);
+                    auto const digit = number / power;
+                    Terminal::put(char('0' + digit));
+                    number -= digit * power;
                 }
-                while (number /= 10);
 
                 variadic += sizeof(int);
                 break;
