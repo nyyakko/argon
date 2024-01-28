@@ -6,7 +6,7 @@
 IDT::IDT():
     table_m ({
         .limit = sizeof(entries_m) - 1,
-        .base  = reinterpret_cast<uint32_t>(entries_m)
+        .base  = reinterpret_cast<uint32_t>(entries_m.data())
     })
 {
     isr::install(*this);

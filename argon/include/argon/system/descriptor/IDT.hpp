@@ -3,6 +3,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <libcpp/Array.hpp>
+
 namespace {
 
 extern "C" void load_idt(uint32_t address);
@@ -53,10 +55,10 @@ private:
         uint32_t base;
     };
 
-    IDTEntry entries_m[IDT_MAX_DESCRIPTORS] {};
+    Array<IDTEntry, IDT_MAX_DESCRIPTORS> entries_m {};
     IDTTable table_m {};
-    static irq_handler_t handlers_m[16];
+    Array<irq_handler_t, 16> static handlers_m;
 };
 
-inline IDT::irq_handler_t IDT::handlers_m[16] = {};
+inline Array<IDT::irq_handler_t, 16> IDT::handlers_m = {};
 

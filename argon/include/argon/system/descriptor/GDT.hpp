@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include <stddef.h>
 
+#include <libcpp/Array.hpp>
+
 namespace {
 
 extern "C" void load_gdt(uint32_t address);
@@ -42,7 +44,7 @@ private:
         uint32_t base;
     };
 
-    GDTEntry entries_m[GDT_MAX_DESCRIPTORS] {};
+    Array<GDTEntry, GDT_MAX_DESCRIPTORS> entries_m {};
     GDTTable table_m {};
 };
 

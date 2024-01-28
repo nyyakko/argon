@@ -1,6 +1,7 @@
 #include "system/Panic.hpp"
 
 #include <libc/random.hpp>
+#include <libcpp/Array.hpp>
 
 #include "hardware/VGA.hpp"
 #include "hardware/IO.hpp"
@@ -10,7 +11,7 @@ void panic(StringView const message)
 {
     asm ("cli");
 
-    static constexpr StringView messages[] =
+    Array static constexpr messages
     {
         "I did that?"_sv,
         "Note to self: Never touch the red button again."_sv,
@@ -32,13 +33,11 @@ void panic(StringView const message)
         "I added a 'fun' feature. Now the program randomly tells jokes."_sv,
     };
 
-    auto constexpr messagesCount = sizeof(messages) / sizeof(StringView);
-
     outb(port::CMOS_COMMAND, port::cmos::SECONDS);
     libc::srand(inb(port::CMOS_DATA));
 
     VGA::clear_buffer();
-    Terminal::putf("%v\n\n", messages[static_cast<uint32_t>(libc::rand()) % messagesCount]);
+    Terminal::putf("%v\n\n", messages[static_cast<uint32_t>(libc::rand()) % messages.size()]);
 
     Terminal::put("panic: ");
     Terminal::putln(message, VGAColor::LIGHT_RED);
