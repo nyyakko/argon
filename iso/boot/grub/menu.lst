@@ -1,0 +1,7 @@
+default=0
+timeout=0
+
+title argon
+multiboot /boot/kernel.img
+kernel /boot/kernel.img
+module /modules/multiply

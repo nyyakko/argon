@@ -1,5 +1,5 @@
-.set ALIGN    , 1<<0
-.set MEMINFO  , 1<<1
+.set ALIGN    , 1 << 0
+.set MEMINFO  , 1 << 1
 .set FLAGS    , ALIGN | MEMINFO
 .set MAGIC    , 0x1BADB002
 .set CHECKSUM , -(MAGIC + FLAGS)
@@ -24,6 +24,7 @@ stack_top:
 _start:
     mov $stack_top, %esp
 
+    push %ebx
     call kmain
     cli
 

@@ -4,4 +4,6 @@
 .vs/
 
 build/
-iso/
+iso/argon.iso
+iso/boot/kernel.img
+iso/modules/*
