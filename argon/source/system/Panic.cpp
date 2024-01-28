@@ -7,7 +7,7 @@
 #include "hardware/IO.hpp"
 #include "Terminal.hpp"
 
-void panic(StringView const message)
+void panic(InterruptStack const* interruptStack, StringView const message)
 {
     asm ("cli");
 
@@ -38,6 +38,10 @@ void panic(StringView const message)
 
     VGA::clear_buffer();
     Terminal::putf("%s\n\n", messages[static_cast<uint32_t>(libc::rand()) % messages.size()]);
+
+    Terminal::putf("GS: %d\nFS: %d\nES: %d\nDS: %d\n", interruptStack->GS, interruptStack->FS, interruptStack->ES, interruptStack->DS);
+    Terminal::putf("EDI: %d\nESI: %d\nEBP: %d\nESP: %d\nEDX: %d\nEDX: %d\nECX: %d\nEAX: %d\n", interruptStack->EDI, interruptStack->ESI, interruptStack->EBP, interruptStack->ESP, interruptStack->ESP, interruptStack->EDX, interruptStack->ECX, interruptStack->EAX);
+    Terminal::putf("EIP: %d\nCS: %d\neflags: %d\nuserESP: %d\nSS: %d\n\n", interruptStack->EIP, interruptStack->CS, interruptStack->eflags, interruptStack->userESP, interruptStack->SS);
 
     Terminal::put("panic: ");
     Terminal::putln(message, VGAColor::LIGHT_RED);

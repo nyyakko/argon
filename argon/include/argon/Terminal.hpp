@@ -40,14 +40,14 @@ public:
                 switch (format.data()[index += 1])
                 {
                 case 'd': {
-                    if constexpr (IsSame<first_t, int>::value)
+                    if constexpr (IsConvertible<first_t, int>::value)
                     {
-                        auto value = first;
+                        first_t value = first;
 
                         for (auto exponent = number_size(value); exponent != 0; exponent -= 1)
                         {
-                            auto const power = pow(10, exponent - 1);
-                            auto const digit = value / power;
+                            first_t const power = pow<first_t>(10, exponent - 1);
+                            first_t const digit = value / power;
                             Terminal::put(char('0' + digit));
                             value -= digit * power;
                         }

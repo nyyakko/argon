@@ -42,7 +42,7 @@ extern "C" void handle_panicking_interrupt(InterruptStack const* interruptStack)
     };
 
     if (interruptStack->ID != RESERVED_INTERRUPT)
-        panic(messages[interruptStack->ID]);
+        panic(interruptStack, messages[interruptStack->ID]);
 }
 
 void isr::install(IDT& idt)

@@ -2,5 +2,7 @@
 
 #include <libcpp/StringView.hpp>
 
-void panic(StringView const message);
+#include "system/descriptor/IDT.hpp"
+
+void panic(InterruptStack const* interruptStack, StringView const message);
 
