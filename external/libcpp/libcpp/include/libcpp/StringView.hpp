@@ -12,8 +12,10 @@ public:
     {
     }
 
-    constexpr auto const* data() const { return this->data_m; }
-    constexpr auto size() const { return this->size_m; }
+    constexpr auto const* data() const { return data_m; }
+    constexpr auto size() const { return size_m; }
+    constexpr auto const* begin() const { return data_m; }
+    constexpr auto const* end() const { return &data_m[this->size()]; }
 
     constexpr auto operator==(StringView toCompare) const
     {
