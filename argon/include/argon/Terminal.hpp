@@ -1,9 +1,9 @@
 #pragma once
 
 #include <libc/math.hpp>
+#include <libcpp/Numerical.hpp>
 #include <libcpp/StringView.hpp>
 #include <libcpp/TypeTraits.hpp>
-#include <libcpp/Numerical.hpp>
 
 #include "hardware/VGA.hpp"
 #include "hardware/VGAColor.hpp"

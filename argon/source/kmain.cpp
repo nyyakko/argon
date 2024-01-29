@@ -1,9 +1,9 @@
 #include "Terminal.hpp"
 #include "hardware/IO.hpp"
+#include "hardware/MultiBoot.hpp"
 #include "hardware/hid/KeyBoard.hpp"
 #include "system/descriptor/GDT.hpp"
 #include "system/descriptor/IDT.hpp"
-#include "hardware/MultiBoot.hpp"
 
 void clock_driver(InterruptStack const*) {}
 

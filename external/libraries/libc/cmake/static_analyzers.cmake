@@ -16,11 +16,11 @@ function(enable_static_analyzers target ENABLED)
         message(WARNING "[${PROJECT_NAME}] Couldn't find a valid ``clang-tidy`` installation.")
     endif()
 
-    if (ENABLED AND CPPCHECK AND CLANGTIDY AND NOT QUIET)
+    if (ENABLED AND CPPCHECK AND CLANGTIDY AND NOT ARGON_EXTERNAL_QUIET)
         message(STATUS "[${PROJECT_NAME}] Static analyzers enabled")
         enable_clang_tidy(${target})
         enable_cppcheck()
-    elseif(NOT QUIET)
+    elseif(NOT ARGON_EXTERNAL_QUIET)
         message(STATUS "[${PROJECT_NAME}] Static analyzers disabled")
     endif()
 

@@ -1,7 +1,7 @@
 #include "system/descriptor/IDT.hpp"
 
-#include "system/descriptor/handling/ISR.hpp"
 #include "system/descriptor/handling/IRQ.hpp"
+#include "system/descriptor/handling/ISR.hpp"
 
 IDT::IDT():
     table_m ({

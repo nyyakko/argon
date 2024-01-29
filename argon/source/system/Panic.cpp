@@ -3,9 +3,9 @@
 #include <libc/random.hpp>
 #include <libcpp/Array.hpp>
 
-#include "hardware/VGA.hpp"
-#include "hardware/IO.hpp"
 #include "Terminal.hpp"
+#include "hardware/IO.hpp"
+#include "hardware/VGA.hpp"
 
 void panic(InterruptStack const* interruptStack, StringView const message)
 {
