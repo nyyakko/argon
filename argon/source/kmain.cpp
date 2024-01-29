@@ -29,21 +29,12 @@ extern "C" void kmain([[maybe_unused]]unsigned int ebx)
     outb(port::PIT_DATA, uint8_t(divisor));
     outb(port::PIT_DATA, uint8_t(divisor >> 8));
 
-#if 0
     auto const* info = reinterpret_cast<multiboot_info_t const*>(ebx);
 
     if (CHECK_FLAG(info->flags, 3))
     {
-        Terminal::putf("programs loaded: %d\n", info->mods_count);
-
-        if (info->mods_count == 1)
-        {
-            auto* module  = reinterpret_cast<multiboot_module_t*>(info->mods_addr);
-            auto* program = reinterpret_cast<int(*)(int, int)>(module->mod_start);
-            Terminal::putf("%d * %d result: %d", 2, 8, program(2, 8));
-        }
+        Terminal::putf("modules loaded: %d\n", info->mods_count);
     }
-#endif
 
     asm ("sti");
 

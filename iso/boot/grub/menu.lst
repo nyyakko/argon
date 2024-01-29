@@ -4,4 +4,5 @@ timeout=0
 title argon
 multiboot /boot/kernel.img
 kernel /boot/kernel.img
+module /modules/apply
 module /modules/multiply

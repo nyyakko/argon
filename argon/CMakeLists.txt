@@ -1,4 +1,5 @@
 add_subdirectory(source)
+add_subdirectory(include/${PROJECT_NAME})
 
 add_library(kernel STATIC "${argon_SourceFiles}")
 

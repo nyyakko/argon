@@ -1,8 +1,8 @@
 function(enable_vcpkg)
 
-    if (NOT ${CMAKE_TOOLCHAIN_FILE} STREQUAL "")
+    if (NOT ${CMAKE_TOOLCHAIN_FILE} STREQUAL "" AND NOT QUIET)
         message(STATUS "[${PROJECT_NAME}] vcpkg toolchain found.")
-    else()
+    elseif(NOT QUIET)
         message(WARNING "[${PROJECT_NAME}] vcpkg toolchain was not found.")
     endif()
 

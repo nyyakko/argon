@@ -1,4 +1,3 @@
-set(libc_DISABLE_TESTS TRUE)
-add_subdirectory(libc)
-set(libcpp_DISABLE_TESTS TRUE)
-add_subdirectory(libcpp)
+set(QUIET TRUE)
+add_subdirectory(executables)
+add_subdirectory(libraries)

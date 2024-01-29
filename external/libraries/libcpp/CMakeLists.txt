@@ -12,7 +12,7 @@ include(remote_clone)
 include(enable_tests)
 include(GNUInstallDirs)
 
-enable_vcpkg()
+# enable_vcpkg()
 # enable_tests()
 
 # set(libcpp_LinkerOptions ${libcpp_LinkerOptions}
