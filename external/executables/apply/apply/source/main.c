@@ -1,7 +1,7 @@
 #include <stdint.h>
 
-void apply(void(*function)(char const*), char const* message)
+void apply(void const*(*function)(void*), void* value)
 {
-    function(message);
+    function(value);
 }
 
