@@ -49,6 +49,16 @@ public:
 
                 switch (format.data()[index += 1])
                 {
+                case 'b': {
+                    if constexpr (IsSame<first_t, bool>::value)
+                    {
+                        if (first == true)
+                            Terminal::put("true");
+                        else
+                            Terminal::put("false");
+                    }
+                    break;
+                }
                 case 'd': {
                     if constexpr (IsConvertible<first_t, int>::value)
                     {

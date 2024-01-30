@@ -6,3 +6,4 @@ multiboot /boot/kernel.img
 kernel /boot/kernel.img
 module /modules/apply
 module /modules/multiply
+module /modules/validator
