@@ -5,6 +5,8 @@
 class StringView
 {
 public:
+    constexpr StringView() = default;
+
     // cppcheck-suppress noExplicitConstructor
     constexpr StringView(char const* string):
         data_m(string),

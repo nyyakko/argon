@@ -28,6 +28,12 @@ struct [[gnu::packed]] IDTEntry
     uint16_t isrHigh;
 };
 
+struct [[gnu::packed]] IDTTable
+{
+    uint16_t limit;
+    uint32_t base;
+};
+
 class IDT
 {
     static constexpr auto IDT_MAX_DESCRIPTORS = 256;
@@ -49,12 +55,6 @@ public:
     static irq_handler_t get_irq_handler(size_t const index);
 
 private:
-    struct [[gnu::packed]] IDTTable
-    {
-        uint16_t limit;
-        uint32_t base;
-    };
-
     Array<IDTEntry, IDT_MAX_DESCRIPTORS> entries_m {};
     IDTTable table_m {};
     Array<irq_handler_t, 16> static handlers_m;

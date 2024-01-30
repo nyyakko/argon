@@ -59,6 +59,13 @@ public:
                     }
                     break;
                 }
+                case 'c': {
+                    if constexpr (IsSame<first_t, char>::value)
+                    {
+                        Terminal::put(first);
+                    }
+                    break;
+                }
                 case 'd': {
                     if constexpr (IsConvertible<first_t, int>::value)
                     {

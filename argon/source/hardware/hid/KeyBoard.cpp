@@ -3,6 +3,7 @@
 #include <libcpp/Array.hpp>
 #include <libcpp/Pair.hpp>
 
+#include "Assert.hpp"
 #include "Terminal.hpp"
 #include "hardware/IO.hpp"
 
@@ -57,9 +58,16 @@ static auto decode_special_key(auto const scanCode)
     return '\0';
 }
 
+char keyboard_read_char(bool)
+{
+    kassert(false && "UNIMPLEMENTED");
+    return 0;
+}
+
 void keyboard_driver(InterruptStack const*)
 {
-    auto const scanCode    = inb(port::BIOS_IO);
+    auto const scanCode = inb(port::PS2_DATA);;
+
     auto static shiftState = State::RELEASED;
 
     if (!(scanCode & 0x80))

@@ -40,3 +40,4 @@ char calculate_verifier(char const* begin, char const* end)
 
     return (char)TO_CHR(11 - verifier % 11);
 }
+

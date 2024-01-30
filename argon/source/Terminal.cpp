@@ -1,9 +1,5 @@
 #include "Terminal.hpp"
 
-#include <libcpp/Iota.hpp>
-#include <libcpp/Numerical.hpp>
-#include <libc/math.hpp>
-
 void Terminal::set_cursor_color(Pair<VGAColor, VGAColor> const color)
 {
     Terminal::the().cursorColor_m = color;

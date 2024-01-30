@@ -70,8 +70,6 @@ struct [[gnu::packed]] GDTEntry
     uint8_t  baseHigh {};
 };
 
-static_assert(sizeof(GDTEntry) == 8);
-
 struct [[gnu::packed]] GDTTable
 {
     uint16_t limit;

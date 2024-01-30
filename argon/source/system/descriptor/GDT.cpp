@@ -1,5 +1,20 @@
 #include "system/descriptor/GDT.hpp"
 
+/*
+    https://cdrdv2-public.intel.com/812392/325462-sdm-vol-1-2abcd-3abcd-4.pdf @ figure 3-8.
+
+    L     — 64-bit code segment (IA-32e mode only)
+    AVL   — Available for use by system software
+    BASE  — Segment base address
+    D/B   — Default operation size (O = 16-bit segment; 1 = 32-bit segment)
+    DPL   — Descriptor privilege level
+    G     — Granularity
+    LIMIT — Segment Limit
+    P     — Segment present
+    S     — Descriptor type (0 = system; 1 = code or data)
+    TYPE  — Segment type
+*/
+
 GDT::GDT():
     table_m ({
         .limit = sizeof(entries_m) - 1,
