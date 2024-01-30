@@ -1,3 +1,4 @@
+#include "Assert.hpp"
 #include "Terminal.hpp"
 #include "hardware/IO.hpp"
 #include "hardware/MultiBoot.hpp"
@@ -33,7 +34,7 @@ extern "C" void kmain([[maybe_unused]]unsigned int ebx)
 
     if (CHECK_FLAG(info->flags, 3))
     {
-        Terminal::putf("loaded modules: %d\n", info->mods_count);
+        Terminal::putf("loaded modules: %d\n\n", info->mods_count);
 
         auto const* modules = reinterpret_cast<multiboot_module_t*>(info->mods_addr);
 
@@ -42,11 +43,8 @@ extern "C" void kmain([[maybe_unused]]unsigned int ebx)
             switch (index)
             {
             case 0: {
-                Terminal::putln("\nrunning apply:");
-
-                auto value = 69;
-
-                Terminal::putf("\tbefore: %d\n", value);
+                auto value          = 69;
+                auto const valueOld = 69;
 
                 using signature_t = void(*)(void(*)(void*), void const*);
                 reinterpret_cast<signature_t>(modules[index].mod_start)([] (void* value) {
@@ -54,12 +52,20 @@ extern "C" void kmain([[maybe_unused]]unsigned int ebx)
                     *reinterpret_cast<int*>(value) += 420;
                 }, &value);
 
-                Terminal::putf("\tafter: %d\n", value);
+                kassert(value == 69421);
+                Terminal::putf("/external/executable/apply: given %d results %d\n", valueOld, value);
 
                 break;
             }
             case 1: {
-                // see: external/executable/multiply/multiply/source/main.c
+                auto const lhs = 69;
+                auto const rhs = 420;
+
+                using signature_t = int(*)(int, int);
+                auto const result = reinterpret_cast<signature_t>(modules[index].mod_start)(lhs, rhs);
+
+                kassert(result == lhs * rhs);
+                Terminal::putf("/external/executable/multiply: given %d, %d results %d\n", lhs, rhs, result);
                 break;
             }
             }

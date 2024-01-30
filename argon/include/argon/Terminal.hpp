@@ -10,6 +10,8 @@
 
 class Terminal
 {
+    Pair<VGAColor, VGAColor> static constexpr DEFAULT_CURSOR_COLOR { VGAColor::LIGHT_GREY, VGAColor::BLACK };
+
 public:
     Terminal()
     {
@@ -19,9 +21,17 @@ public:
 public:
     static Terminal& initialize()
     {
-        static Terminal the {};
-        return the;
+        static Terminal terminal {};
+        return terminal;
     }
+
+    static Terminal& the()
+    {
+        return Terminal::initialize();
+    }
+
+    static void set_cursor_color(Pair<VGAColor, VGAColor> const color);
+    static Pair<VGAColor, VGAColor> get_cursor_color();
 
     static void put(char const data, VGAColor const foreground = VGAColor::LIGHT_GREY, VGAColor const background = VGAColor::BLACK);
     static void put(StringView const data, VGAColor const foreground = VGAColor::LIGHT_GREY, VGAColor const background = VGAColor::BLACK);
@@ -55,7 +65,7 @@ public:
                     break;
                 }
                 case 's': {
-                    if constexpr (IsSame<first_t, StringView>::value || IsSame<first_t, char const*>::value)
+                    if constexpr (IsSame<first_t, StringView>::value || IsConvertible<first_t, char const*>::value)
                     {
                         Terminal::put(first);
                     }
@@ -74,5 +84,7 @@ private:
     {
         Terminal::put(format);
     }
+
+    Pair<VGAColor, VGAColor> cursorColor_m { VGAColor::LIGHT_GREY, VGAColor::BLACK };
 };
 

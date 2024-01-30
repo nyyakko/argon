@@ -4,9 +4,22 @@
 #include <libcpp/Numerical.hpp>
 #include <libc/math.hpp>
 
+void Terminal::set_cursor_color(Pair<VGAColor, VGAColor> const color)
+{
+    Terminal::the().cursorColor_m = color;
+}
+
+Pair<VGAColor, VGAColor> Terminal::get_cursor_color()
+{
+    return Terminal::the().cursorColor_m;
+}
+
 void Terminal::put(char const data, VGAColor const foreground, VGAColor const background)
 {
-    VGA::put_entry(VGAEntry(data, foreground, background));
+    if (auto color = Terminal::the().cursorColor_m; color != Terminal::DEFAULT_CURSOR_COLOR)
+        VGA::put_entry(VGAEntry(data, color.first, color.second));
+    else
+        VGA::put_entry(VGAEntry(data, foreground, background));
 }
 
 void Terminal::put(StringView const data, VGAColor const foreground, VGAColor const background)

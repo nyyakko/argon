@@ -5,5 +5,8 @@ struct Pair
 {
     T first;
     U second;
+
+    constexpr auto operator==(Pair const& rhs) const { return first == rhs.first && second == rhs.second; }
+    constexpr auto operator!=(Pair const& rhs) const { return !(*this == rhs); }
 };
 
