@@ -48,6 +48,8 @@ public:
         return the;
     }
 
+    static IDT& the() { return IDT::initialize(); }
+
     using irq_handler_t = void(*)(InterruptStack const*);
 
     void set_entry(size_t const index, void(*isr)(), uint8_t const flags);
@@ -57,8 +59,6 @@ public:
 private:
     Array<IDTEntry, IDT_MAX_DESCRIPTORS> entries_m {};
     IDTTable table_m {};
-    Array<irq_handler_t, 16> static handlers_m;
+    Array<irq_handler_t, 16> handlers_m {};
 };
-
-inline Array<IDT::irq_handler_t, 16> IDT::handlers_m = {};
 

@@ -3,6 +3,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <libcpp/Concepts.hpp>
+
+#include "hardware/hid/KeyBoard.hpp"
+
 namespace port {
 
 static constexpr auto FB_COMMAND   = 0x3D4;
@@ -30,8 +34,29 @@ static constexpr auto PIT_DATA     = 0x40;
 
     }
 
+    uint8_t inb(uint16_t const port);
+    void outb(uint16_t const port, uint8_t const value);
 }
 
-uint8_t inb(uint16_t const port);
-void outb(uint16_t const port, uint8_t const value);
+void read_from_keyboard(ArrayConcept auto& buffer)
+{
+    auto index = 0zu;
+
+    while (index != buffer.size())
+    {
+        auto const [_, key] = KeyBoard::get_last_pressed_scancode();
+
+        if (key == '\n') break;
+        else if (key == '\b' && index >= 0)
+        {
+            buffer[index - 1] = 0;
+            index -= 1;
+        }
+        else if (index >= 0)
+        {
+            buffer[index % buffer.size()] = key;
+            index += 1;
+        }
+    }
+}
 

@@ -35,8 +35,8 @@ void panic(StringView const message, auto&&... args)
         "I added a 'fun' feature. Now the program randomly tells jokes."_sv,
     };
 
-    outb(port::CMOS_COMMAND, port::cmos::SECONDS);
-    libc::srand(inb(port::CMOS_DATA));
+    port::outb(port::CMOS_COMMAND, port::cmos::SECONDS);
+    libc::srand(port::inb(port::CMOS_DATA));
 
     VGA::clear_buffer();
     Terminal::putf("%s\n\n", messages[static_cast<uint32_t>(libc::rand()) % messages.size()]);

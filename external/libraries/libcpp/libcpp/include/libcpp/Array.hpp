@@ -7,6 +7,8 @@ struct Array
 {
     T values_m[Size] {};
 
+    using type_t = T;
+
     constexpr auto* data() { return &values_m[0]; }
     constexpr auto const* data() const { return &values_m[0]; }
     constexpr auto* begin() { return &values_m[0]; }

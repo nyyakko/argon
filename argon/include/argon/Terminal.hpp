@@ -12,7 +12,6 @@ class Terminal
 {
     Pair<VGAColor, VGAColor> static constexpr DEFAULT_CURSOR_COLOR { VGAColor::LIGHT_GREY, VGAColor::BLACK };
 
-public:
     Terminal()
     {
         VGA::initialize();
@@ -25,10 +24,7 @@ public:
         return terminal;
     }
 
-    static Terminal& the()
-    {
-        return Terminal::initialize();
-    }
+    static Terminal& the() { return Terminal::initialize(); }
 
     static void set_cursor_color(Pair<VGAColor, VGAColor> const color);
     static Pair<VGAColor, VGAColor> get_cursor_color();

@@ -90,6 +90,8 @@ public:
         return the;
     }
 
+    static GDT& the() { return GDT::initialize(); }
+
 private:
     void set_entry(size_t const index, uint32_t const base, uint32_t const limit, Access const access, uint8_t const granularity);
 

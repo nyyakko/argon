@@ -26,11 +26,11 @@ void IDT::set_entry(size_t const index, void(*isr)(), uint8_t const flags)
 
 void IDT::set_irq_handler(size_t const index, irq_handler_t const handler)
 {
-    IDT::handlers_m[index] = handler;
+    IDT::the().handlers_m[index] = handler;
 }
 
 IDT::irq_handler_t IDT::get_irq_handler(size_t const index)
 {
-    return IDT::handlers_m[index];
+    return IDT::the().handlers_m[index];
 }
 

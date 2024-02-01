@@ -1,16 +1,7 @@
 #include "hardware/hid/KeyBoard.hpp"
 
-#include <libcpp/Array.hpp>
-#include <libcpp/Pair.hpp>
-
-#include "Assert.hpp"
 #include "Terminal.hpp"
 #include "hardware/IO.hpp"
-
-enum class State
-{
-    PRESSED, RELEASED
-};
 
 static auto decode_normal_key(auto const scanCode)
 {
@@ -28,11 +19,11 @@ static auto decode_normal_key(auto const scanCode)
         if (scanCode == code.first)
         // cppcheck-suppress useStlAlgorithm
         {
-            return code.second;
+            return code;
         }
     }
 
-    return '\0';
+    return Pair<uint32_t, char> {};
 }
 
 static auto decode_special_key(auto const scanCode)
@@ -51,40 +42,54 @@ static auto decode_special_key(auto const scanCode)
         if (scanCode == code.first)
         // cppcheck-suppress useStlAlgorithm
         {
-            return code.second;
+            return code;
         }
     }
 
-    return '\0';
+    return Pair<uint32_t, char> {};
 }
 
-char keyboard_read_char(bool)
+void KeyBoard::keyboard_driver(InterruptStack const*)
 {
-    kassert(false && "UNIMPLEMENTED");
-    return 0;
-}
-
-void keyboard_driver(InterruptStack const*)
-{
-    auto const scanCode = inb(port::PS2_DATA);;
-
-    auto static shiftState = State::RELEASED;
+    auto const scanCode = port::inb(port::PS2_DATA);
 
     if (!(scanCode & 0x80))
     {
         switch (scanCode)
         {
-        case 0x2A: shiftState = State::PRESSED; return;
+            case 0x2A: KeyBoard::the().shift_m = State::PRESSED; return;
         }
 
-        if (shiftState == State::RELEASED)
-            Terminal::put(decode_normal_key(scanCode));
+        if (KeyBoard::the().shift_m == State::RELEASED)
+        {
+            auto const result = decode_normal_key(scanCode);
+            KeyBoard::the().lastPressedKey_m = result;
+            Terminal::put(result.second);
+        }
         else
-            Terminal::put(decode_special_key(scanCode));
+        {
+            auto const result = decode_special_key(scanCode);
+            KeyBoard::the().lastPressedKey_m = result;
+            Terminal::put(result.second);
+        }
     }
     else switch (~(scanCode & 0x80) & scanCode)
     {
-    case 0x2A: shiftState = State::RELEASED;
+        case 0x2A: KeyBoard::the().shift_m = State::RELEASED;
     }
+}
+
+Pair<uint32_t, char> KeyBoard::get_last_pressed_scancode()
+{
+    Pair<uint32_t, char> result {};
+
+    do
+    {
+        result = KeyBoard::the().lastPressedKey_m;
+    } while (!result);
+
+    KeyBoard::the().lastPressedKey_m = {};
+
+    return result;
 }
 

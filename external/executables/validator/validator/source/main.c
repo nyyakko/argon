@@ -7,9 +7,14 @@
 char calculate_verifier(char const* begin, char const* end);
 bool validate_cpf(char const* cpf);
 
-bool main(char const* cpf)
+int main(int argc, char const** argv)
 {
-    return validate_cpf(cpf);
+    if (argc == 1)
+    {
+        return 69;
+    }
+
+    return validate_cpf(argv[1]);
 }
 
 bool validate_cpf(char const* cpf)

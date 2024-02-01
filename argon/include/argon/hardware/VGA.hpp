@@ -21,19 +21,16 @@ public:
         return the;
     }
 
+    static VGA& the() { return VGA::initialize(); }
+
     static void put_entry(VGAEntry const entry);
     static void clear_buffer(VGAColor const background = VGAColor::BLACK);
     static void set_cursor_position(size_t const x, size_t const y);
     static Pair<size_t, size_t> get_cursor_position();
 
-    static size_t x_s;
-    static size_t y_s;
-
 private:
-    static uint16_t* buffer_s;
+    uint16_t* buffer_m { reinterpret_cast<uint16_t*>(0xB8000) };
+    size_t positionX_m {};
+    size_t positionY_m {};
 };
-
-inline auto VGA::buffer_s = reinterpret_cast<uint16_t*>(0xB8000);
-inline auto VGA::x_s      = 0u;
-inline auto VGA::y_s      = 0u;
 

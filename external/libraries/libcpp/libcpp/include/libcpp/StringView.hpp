@@ -29,6 +29,26 @@ private:
     size_t size_m = 0;
 };
 
+constexpr auto starts_with(StringView const lhs, StringView const rhs)
+{
+    auto result = true;
+
+    for (auto index = 0zu; index != lhs.size(); index += 1)
+    {
+        if (index + 1 >= rhs.size())
+        {
+            break;
+        }
+        else if (lhs.data()[index] != rhs.data()[index])
+        {
+            result = false;
+            break;
+        }
+    }
+
+    return result;
+}
+
 constexpr StringView operator""_sv(char const* data, size_t)
 {
     return StringView(data);
