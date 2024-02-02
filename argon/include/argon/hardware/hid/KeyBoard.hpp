@@ -17,8 +17,8 @@ public:
 
     static KeyBoard& initialize()
     {
-        class KeyBoard static the {};
-        return the;
+        KeyBoard static keyboard {};
+        return keyboard;
     }
 
     static KeyBoard& the() { return KeyBoard::initialize(); }
@@ -35,12 +35,12 @@ public:
             auto const [_, key] = KeyBoard::get_last_pressed_scancode();
 
             if (key == '\n') break;
-            else if (key == '\b' && index >= 0)
+            else if (key == '\b' && index >= 1)
             {
                 buffer[index - 1] = 0;
                 index -= 1;
             }
-            else if (index >= 0)
+            else
             {
                 buffer[index % buffer.size()] = key;
                 index += 1;

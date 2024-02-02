@@ -65,7 +65,9 @@ extern "C" void kmain([[maybe_unused]]unsigned int ebx)
 
         auto const* modules = reinterpret_cast<multiboot_module_t*>(info->mods_addr);
 
+        // cppcheck-suppress incorrectStringBooleanError
         if (starts_with(command.data(), availableModules[0])) kassert(false && "UNIMPLEMENTED");
+        // cppcheck-suppress incorrectStringBooleanError
         else if (starts_with(command.data(), availableModules[1])) kassert(false && "UNIMPLEMENTED");
         else if (starts_with(command.data(), availableModules[2]))
         {

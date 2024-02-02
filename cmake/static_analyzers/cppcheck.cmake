@@ -18,6 +18,7 @@ function(enable_cppcheck)
             --suppress=syntaxError
             --suppress=preprocessorErrorDirective
             --inconclusive
+            --check-level=exhaustive
             --error-exitcode=2)
     else()
         set(CMAKE_CXX_CPPCHECK ${CPPCHECK} --template=${CPPCHECK_TEMPLATE} ${CPPCHECK_OPTIONS})

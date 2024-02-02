@@ -85,9 +85,9 @@ class GDT
 public:
     static GDT& initialize()
     {
-        static GDT the {};
-        load_gdt(reinterpret_cast<uint32_t>(&the.table_m));
-        return the;
+        static GDT gdt {};
+        load_gdt(reinterpret_cast<uint32_t>(&gdt.table_m));
+        return gdt;
     }
 
     static GDT& the() { return GDT::initialize(); }

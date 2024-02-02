@@ -60,18 +60,15 @@ void KeyBoard::keyboard_driver(InterruptStack const*)
             case 0x2A: KeyBoard::the().shift_m = State::PRESSED; return;
         }
 
+        Pair<uint32_t, char> result {};
+
         if (KeyBoard::the().shift_m == State::RELEASED)
-        {
-            auto const result = decode_normal_key(scanCode);
-            KeyBoard::the().lastPressedKey_m = result;
-            Terminal::put(result.second);
-        }
+            result = decode_normal_key(scanCode);
         else
-        {
-            auto const result = decode_special_key(scanCode);
-            KeyBoard::the().lastPressedKey_m = result;
-            Terminal::put(result.second);
-        }
+            result = decode_special_key(scanCode);
+
+        KeyBoard::the().lastPressedKey_m = result;
+        Terminal::put(result.second);
     }
     else switch (~(scanCode & 0x80) & scanCode)
     {

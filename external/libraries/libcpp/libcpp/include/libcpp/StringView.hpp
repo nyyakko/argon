@@ -29,6 +29,11 @@ private:
     size_t size_m = 0;
 };
 
+constexpr StringView operator""_sv(char const* data, size_t)
+{
+    return StringView(data);
+}
+
 constexpr auto starts_with(StringView const lhs, StringView const rhs)
 {
     auto result = true;
@@ -39,6 +44,11 @@ constexpr auto starts_with(StringView const lhs, StringView const rhs)
         {
             break;
         }
+        else if (index + 1 >= lhs.size())
+        {
+            result = false;
+            break;
+        }
         else if (lhs.data()[index] != rhs.data()[index])
         {
             result = false;
@@ -47,10 +57,5 @@ constexpr auto starts_with(StringView const lhs, StringView const rhs)
     }
 
     return result;
-}
-
-constexpr StringView operator""_sv(char const* data, size_t)
-{
-    return StringView(data);
 }
 

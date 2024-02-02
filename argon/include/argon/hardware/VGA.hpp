@@ -17,8 +17,8 @@ public:
 
     static VGA& initialize()
     {
-        static VGA the {};
-        return the;
+        static VGA vga {};
+        return vga;
     }
 
     static VGA& the() { return VGA::initialize(); }

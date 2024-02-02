@@ -68,6 +68,7 @@ public:
                         value -= digit * power;
                     }
                 }
+                // cppcheck-suppress constStatement
                 else if constexpr (requires (first_t value) { value.first; value.second; })
                 {
                     Terminal::putf("[{}, {}]", first.first, first.second);

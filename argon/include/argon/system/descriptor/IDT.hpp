@@ -43,9 +43,9 @@ class IDT
 public:
     static IDT& initialize()
     {
-        static IDT the {};
-        load_idt(reinterpret_cast<uint32_t>(&the.table_m));
-        return the;
+        static IDT idt {};
+        load_idt(reinterpret_cast<uint32_t>(&idt.table_m));
+        return idt;
     }
 
     static IDT& the() { return IDT::initialize(); }
