@@ -39,7 +39,7 @@ void panic(StringView const message, auto&&... args)
     libc::srand(port::inb(port::CMOS_DATA));
 
     VGA::clear_buffer();
-    Terminal::putf("%s\n\n", messages[static_cast<uint32_t>(libc::rand()) % messages.size()]);
+    Terminal::putf("{}\n\n", messages[static_cast<uint32_t>(libc::rand()) % messages.size()]);
 
     Terminal::put("panic: ");
 
@@ -49,8 +49,6 @@ void panic(StringView const message, auto&&... args)
         Terminal::putf(message, args...);
     else
         Terminal::putln(message);
-
-    // Terminal::putln(message, VGAColor::LIGHT_RED);
 
     asm ("hlt");
 }

@@ -43,3 +43,36 @@ struct IsConvertible :
 {
 };
 
+template <class T>
+struct IsIntegral : IntegralConstant<bool, 
+    requires (T value, T* pointer, void(*func)(T))
+    {
+        reinterpret_cast<T>(value);
+        func(0);
+        pointer + value;
+    }>
+{};
+
+template <class T>
+struct IsFloatingPoint : IntegralConstant<bool,
+    IsSame<float, typename Decay<T>::type>::value ||
+    IsSame<double, typename Decay<T>::type>::value ||
+    IsSame<long double, typename Decay<T>::type>::value>
+{};
+
+template <class T>
+struct IsArithmetic : IntegralConstant<bool,
+    IsIntegral<T>::value || IsFloatingPoint<T>::value
+    >
+{};
+
+template <class T>
+struct IsIterable : IntegralConstant<bool,
+    requires (T value)
+    {
+        value.begin();
+        value.end();
+        value[0];
+    }>
+{};
+

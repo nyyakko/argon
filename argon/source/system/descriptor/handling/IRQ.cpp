@@ -21,7 +21,7 @@ extern "C" void interrupt_handler_dispatcher(InterruptStack const* interruptStac
     }
     else
     {
-        Terminal::putf("interrupt request id %d was left unhandled.\n", interruptStack->ID);
+        Terminal::putf("interrupt request id {} was left unhandled.\n", interruptStack->ID);
     }
 
     if (interruptStack->ID >= 8)

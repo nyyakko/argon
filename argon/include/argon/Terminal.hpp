@@ -33,60 +33,66 @@ public:
     static void put(StringView const data, VGAColor const foreground = VGAColor::LIGHT_GREY, VGAColor const background = VGAColor::BLACK);
     static void putln(StringView const data, VGAColor const foreground = VGAColor::LIGHT_GREY, VGAColor const background = VGAColor::BLACK);
 
-    static void putf(StringView const format, auto first, auto&&... args)
+    static void putf(StringView const format, auto&& first, auto&&... args)
     {
         for (auto index = 0zu; index != format.size(); index += 1)
         {
-            if (auto const byte = format.data()[index]; byte != '%')
+            if (auto const byte = format.data()[index]; byte != '{')
                 Terminal::put(byte);
             else
             {
                 using first_t = Decay<decltype(first)>::type;
 
-                switch (format.data()[index += 1])
+                index += 1;
+
+                if constexpr (IsConvertible<first_t, StringView>::value || IsSame<first_t, char>::value)
                 {
-                case 'b': {
-                    if constexpr (IsSame<first_t, bool>::value)
-                    {
-                        if (first == true)
-                            Terminal::put("true");
-                        else
-                            Terminal::put("false");
-                    }
-                    break;
+                    Terminal::put(first);
                 }
-                case 'c': {
-                    if constexpr (IsSame<first_t, char>::value)
-                    {
-                        Terminal::put(first);
-                    }
-                    break;
+                else if constexpr (IsSame<first_t, bool>::value)
+                {
+                    if (first == true)
+                        Terminal::put("true");
+                    else
+                        Terminal::put("false");
                 }
-                case 'd': {
-                    if constexpr (IsConvertible<first_t, int>::value)
-                    {
-                        first_t value = first;
+                else if constexpr (IsIntegral<first_t>::value)
+                {
+                    first_t value = first;
 
-                        for (auto exponent = number_size(value); exponent != 0; exponent -= 1)
-                        {
-                            first_t const power = pow<first_t>(10, exponent - 1);
-                            first_t const digit = value / power;
-                            Terminal::put(char('0' + digit));
-                            value -= digit * power;
-                        }
-                    }
-                    break;
-                }
-                case 's': {
-                    if constexpr (IsSame<first_t, StringView>::value || IsConvertible<first_t, char const*>::value)
+                    for (auto exponent = number_size(value); exponent != 0; exponent -= 1)
                     {
-                        Terminal::put(first);
+                        first_t const power = pow<first_t>(10, exponent - 1);
+                        first_t const digit = value / power;
+                        Terminal::put(char('0' + digit));
+                        value -= digit * power;
                     }
-                    break;
                 }
+                else if constexpr (requires (first_t value) { value.first; value.second; })
+                {
+                    Terminal::putf("[{}, {}]", first.first, first.second);
+                }
+                else if constexpr (IsIterable<first_t>::value)
+                {
+                    Terminal::put("[");
+
+                    for (StringView prefix = ""; auto&& value : first)
+                    {
+                        Terminal::put(prefix), Terminal::putf("{}", value), prefix = ", ";
+                    }
+
+                    Terminal::put("]");
+                }
+                else
+                {
+                    static_assert(false, "an invalid type was given to putf");
                 }
 
-                putf(&format.data()[index + 1], args...);
+                if (index + 1 < format.size())
+                {
+                    putf(&format.data()[index + 1], args...);
+                }
+
                 break;
             }
         }

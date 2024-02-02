@@ -47,21 +47,13 @@ extern "C" void kmain([[maybe_unused]]unsigned int ebx)
 
     Array<StringView, 3> static constexpr availableModules
     {
-        "apply"_sv, "multiply"_sv, "validator"_sv
+         "apply", "multiply", "validator"
     };
 
     if (CHECK_FLAG(info->flags, 3))
     {
         kassert(availableModules.size() == info->mods_count);
-
-        Terminal::put("loaded modules: [");
-
-        for (StringView prefix = ""; auto module : availableModules)
-        {
-            Terminal::put(prefix), Terminal::put(module), prefix = ", ";
-        }
-
-        Terminal::putln("]");
+        Terminal::putf("available modules: {}\n", availableModules);
     }
 
     Terminal::put("\n");
@@ -69,7 +61,7 @@ extern "C" void kmain([[maybe_unused]]unsigned int ebx)
     while (true)
     {
         Array<char, 255> command {};
-        read_from_keyboard(command);
+        KeyBoard::read(command);
 
         auto const* modules = reinterpret_cast<multiboot_module_t*>(info->mods_addr);
 
@@ -86,11 +78,11 @@ extern "C" void kmain([[maybe_unused]]unsigned int ebx)
             else
                 result = execute_module(modules[2].mod_start, moduleName);
 
-            Terminal::putf("module `%s` exited with code %d\n", moduleName, result);
+            Terminal::putf("module `{}` exited with code {}\n", moduleName, result);
         }
         else
         {
-            Terminal::putf("module `%s` doesn't exist.\n", command.data());
+            Terminal::putf("module `{}` doesn't exist.\n", command.data());
         }
     }
 
