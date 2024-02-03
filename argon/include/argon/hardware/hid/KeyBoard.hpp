@@ -49,7 +49,7 @@ public:
     }
 
 private:
-    [[maybe_unused]]State shift_m { State::RELEASED };
+    State shift_m { State::RELEASED };
     Pair<uint32_t, char> lastPressedKey_m {};
 };
 
